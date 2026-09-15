@@ -1,0 +1,19 @@
+SANTOSH SINGH
+Dehradun, India | +91 8347735836 | santosh102969@gmail.com
+
+EDUCATION
+Dehradun Institute of Technology - B.Tech Computer Science & Engineering (2023-2027)
+
+EXPERIENCE
+Celebal Technologies Pvt. Ltd. - Celebal Excellence Intern, Data Science (Jun-Aug 2026)
+
+PROJECTS
+RAG-Based AI Study Tool - Python, FastAPI, React, LangChain, ChromaDB
+AI-Powered Code Review Agent - Python, FastAPI, Ollama, CodeLlama
+End-to-End House Price Prediction Model - Python, ZenML, MLflow
+
+SKILLS
+Java, Python, TensorFlow, Keras, Scikit-learn, Pandas, NumPy, OpenCV, Matplotlib, FastAPI, React, LangChain, MLflow, ZenML, Docker, GitHub Actions, Ollama
+
+ACHIEVEMENTS
+Solved 280+ LeetCode data structures and algorithms problems in Java.
