@@ -3,6 +3,10 @@
     {
       "source": "/leetcode",
       "destination": "https://leetcode.com/graphql"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

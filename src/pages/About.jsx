@@ -1,134 +1,76 @@
-import { GraduationCap, Briefcase, Code, Award } from 'lucide-react'
-import './About.css'
+import { useEffect } from 'react'
+import { ArrowDown, ArrowRight, ArrowUpRight, Briefcase, Code2, GraduationCap, MapPin, Plus } from 'lucide-react'
+import SiteHeader from '../components/SiteHeader'
+import SiteFooter from '../components/SiteFooter'
+import { portfolio } from '../data/mockData'
+import portrait from '../assets/me.png'
+import './AboutPage.css'
+
+const journey = [
+  portfolio.milestones.find((item) => item.label === 'Education'),
+  portfolio.milestones.find((item) => item.label === 'Industry experience'),
+].filter(Boolean)
 
 function About() {
-  const education = [
-    {
-      school: 'Dehradun Institute of Technology',
-      location: 'Dehradun, India',
-      degree: 'B.Tech Computer Science & Engineering',
-      period: '2023 – 2027',
-    },
-    {
-      school: 'SGRR Public School',
-      location: 'Dehradun, India',
-      degree: 'Senior Secondary School (Class XII)',
-      period: 'Jul 2021 – Apr 2023',
-      score: '73.45%',
-    },
-    {
-      school: 'OLOHES',
-      location: 'Silvassa, India',
-      degree: 'High School (Class X)',
-      period: 'May 2013 – Apr 2021',
-      score: '79.67%',
-    },
-  ]
-
-  const experience = [
-    {
-      company: 'Celebal Technologies Pvt. Ltd.',
-      role: 'Celebal Excellence Intern (CEI) — Data Science',
-      period: 'Jun 2026 – Aug 2026',
-      highlights: [
-        'Selected for structured, industry-focused internship combining guided learning, mentorship, and hands-on project work on real-world Data Science use cases',
-        'Undergoing industry-aligned curriculum to build technical foundations with exposure to industry-relevant tools and datasets',
-        'Program concludes with performance-based assessment and Certificate of Completion',
-      ],
-    },
-  ]
-
-  const skills = {
-    'Languages': 'Java, Python',
-    'Frameworks': 'TensorFlow, Keras, Scikit-learn, Pandas, NumPy, OpenCV, Matplotlib, FastAPI, React, LangChain',
-    'Core Concepts': 'Machine Learning, Deep Learning, NLP, Computer Vision, Generative AI, RAG',
-    'Tools': 'Jupyter Notebook, Git/GitHub, MLflow, ZenML, Docker, GitHub Actions (CI/CD), Ollama',
-  }
+  useEffect(() => {
+    const previousTitle = document.title
+    const previousDescription = document.querySelector('meta[name="description"]')
+    const description = previousDescription || document.createElement('meta')
+    const previousContent = previousDescription?.getAttribute('content')
+    if (!previousDescription) {
+      description.setAttribute('name', 'description')
+      document.head.appendChild(description)
+    }
+    document.title = `About ${portfolio.name} — AI/ML Student & Developer`
+    description.setAttribute('content', 'Meet Santosh Singh, a Computer Science student at DIT Dehradun, Class of 2027. Explore his learning journey, data science experience, and AI/ML toolkit.')
+    return () => {
+      document.title = previousTitle
+      if (!previousDescription) description.remove()
+      else if (previousContent === null) description.removeAttribute('content')
+      else description.setAttribute('content', previousContent)
+    }
+  }, [])
 
   return (
-    <section className="section-wrapper about-section">
-      <div className="about-content">
-        <div className="about-header">
-          <h2 className="section-title">
-            About <span className="accent-text">Me</span>
-          </h2>
-          <p className="about-intro">
-            A passionate Data Science and ML Engineering student at DIT Dehradun,
-            focused on building intelligent solutions with cutting-edge AI technologies.
-          </p>
-        </div>
-
-        <div className="about-grid">
-          <div className="about-card">
-            <div className="card-icon">
-              <GraduationCap size={24} />
+    <div className="aboutpage" id="top">
+      <a className="skip-link" href="#aboutpage-main">Skip to content</a>
+      <SiteHeader />
+      <main id="aboutpage-main" tabIndex={-1}>
+        <section className="aboutpage-hero container" aria-labelledby="aboutpage-title">
+          <div className="aboutpage-topline"><span>About / {portfolio.name}</span><span><MapPin size={13} aria-hidden="true" />{portfolio.location}</span></div>
+          <div className="aboutpage-hero-grid">
+            <div className="aboutpage-intro">
+              <p className="aboutpage-kicker"><span aria-hidden="true" />The person behind the projects</p>
+              <h1 id="aboutpage-title">The human<br />in the loop.</h1>
+              <p className="aboutpage-hero-copy">An AI/ML student, a software builder, and someone who learns best by making things.</p>
+              <div className="aboutpage-hero-links"><a className="aboutpage-resume" href={portfolio.resume} target="_blank" rel="noreferrer">Read my résumé<ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a><a className="aboutpage-toolkit-jump" href="#toolkit">Explore my toolkit<ArrowDown size={16} aria-hidden="true" /></a></div>
+              <div className="aboutpage-class"><span>B.Tech / Computer Science & Engineering</span><strong>CLASS OF 2027</strong></div>
             </div>
-            <h3>Education</h3>
-            <div className="timeline">
-              {education.map((edu, idx) => (
-                <div key={idx} className="timeline-item">
-                  <h4>{edu.school}</h4>
-                  <p className="degree">{edu.degree}</p>
-                  <p className="period">{edu.period}</p>
-                  {edu.score && <p className="score">Score: {edu.score}</p>}
-                </div>
-              ))}
-            </div>
+            <figure className="aboutpage-portrait">
+              <div className="aboutpage-portrait-stage"><span className="aboutpage-portrait-year" aria-hidden="true">27</span><span className="aboutpage-portrait-orbit" aria-hidden="true" /><img src={portrait} alt="Santosh Singh wearing his DIT hoodie" width="747" height="879" /><span className="aboutpage-portrait-plus" aria-hidden="true">+</span></div>
+              <figcaption><span>{portfolio.name}</span><span>Student in progress.</span></figcaption>
+            </figure>
           </div>
+        </section>
 
-          <div className="about-card">
-            <div className="card-icon">
-              <Briefcase size={24} />
-            </div>
-            <h3>Experience</h3>
-            <div className="timeline">
-              {experience.map((exp, idx) => (
-                <div key={idx} className="timeline-item">
-                  <h4>{exp.company}</h4>
-                  <p className="role">{exp.role}</p>
-                  <p className="period">{exp.period}</p>
-                  <ul className="highlights">
-                    {exp.highlights.map((h, i) => (
-                      <li key={i}>{h}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
+        <section className="aboutpage-story" aria-labelledby="aboutpage-story-title">
+          <div className="container aboutpage-story-grid"><div><span className="aboutpage-section-label">A little context</span><h2 id="aboutpage-story-title">Student first.<br />Curiosity always.</h2></div><div className="aboutpage-story-copy"><p className="aboutpage-lead">I'm Santosh, studying Computer Science & Engineering at DIT in Dehradun.</p><p>I'm interested in the place where software meets machine learning. My projects explore how language models can work with personal documents, how inference can stay local, and how an experiment can become easier to reproduce.</p><p>Computer vision gives me another set of questions: what does a model see, and how can we understand the signals behind its prediction? I'm still learning, and building is how I work through those questions.</p><p>Alongside that work, I practice data structures and algorithms in Java. A different kind of problem, with the same habit of trying, reviewing, and trying again.</p></div></div>
+        </section>
 
-          <div className="about-card full-width">
-            <div className="card-icon">
-              <Code size={24} />
-            </div>
-            <h3>Technical Skills</h3>
-            <div className="skills-grid">
-              {Object.entries(skills).map(([category, skillList]) => (
-                <div key={category} className="skill-category">
-                  <h4>{category}</h4>
-                  <div className="skill-tags">
-                    {skillList.split(', ').map((skill, idx) => (
-                      <span key={idx} className="skill-tag">{skill}</span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <section className="aboutpage-journey container" aria-labelledby="aboutpage-journey-title">
+          <div className="aboutpage-journey-heading"><span className="aboutpage-section-label">Education & experience</span><h2 id="aboutpage-journey-title">Where I'm<br />learning.</h2><p>Coursework, industry exposure, and the work in between.</p></div>
+          <div className="aboutpage-timeline">{journey.map((item) => <article className="aboutpage-timeline-item" key={item.label}><div className="aboutpage-timeline-icon" aria-hidden="true">{item.label === 'Education' ? <GraduationCap size={22} /> : <Briefcase size={21} />}</div><div><div className="aboutpage-timeline-top"><span>{item.label}</span><span>{item.period}</span></div><h3>{item.title}</h3><p className="aboutpage-timeline-place">{item.place}</p><p>{item.detail}</p></div></article>)}</div>
+        </section>
 
-          <div className="about-card full-width">
-            <div className="card-icon">
-              <Award size={24} />
-            </div>
-            <h3>Achievements</h3>
-            <p className="achievement">
-              <strong>LeetCode:</strong> Solved 280+ Data Structures & Algorithms problems (Java),
-              including arrays, strings, hash tables, dynamic programming, and binary search.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+        <section className="aboutpage-practice" aria-labelledby="aboutpage-practice-title"><div className="container aboutpage-practice-inner"><div className="aboutpage-practice-number">280<span>+</span></div><div className="aboutpage-practice-copy"><span className="aboutpage-section-label">Practice makes patterns</span><h2 id="aboutpage-practice-title">Problems solved.<br />More to figure out.</h2><p>Data structures and algorithms in Java, with practice across arrays, strings, hash tables, dynamic programming, and binary search.</p><a href="https://leetcode.com/u/santosh102969/" target="_blank" rel="noreferrer">Visit my LeetCode<ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a></div><Code2 className="aboutpage-practice-mark" size={110} strokeWidth={.8} aria-hidden="true" /></div></section>
+
+        <section className="aboutpage-toolkit container" id="toolkit" aria-labelledby="aboutpage-toolkit-title"><div className="aboutpage-toolkit-heading"><span className="aboutpage-section-label">My working set</span><h2 id="aboutpage-toolkit-title">Tools for<br />the questions.</h2><p>Languages, libraries, and systems I've used across coursework and projects. Open a group to take a closer look.</p><span className="aboutpage-toolkit-note"><span aria-hidden="true">+</span> Always a work in progress.</span></div><div className="aboutpage-skill-list">{portfolio.skills.map((group, index) => <details className="aboutpage-skill-group" key={group.title} open={index === 0}><summary><span>{group.title}</span><span className="aboutpage-skill-count">{group.items.length} skills</span><Plus size={22} aria-hidden="true" /></summary><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></details>)}</div></section>
+
+        <section className="aboutpage-next container" aria-labelledby="aboutpage-next-title"><div className="aboutpage-next-heading"><span className="aboutpage-section-label">Keep exploring</span><h2 id="aboutpage-next-title">See the questions<br />turn into code.</h2></div><div className="aboutpage-next-links"><a href="/projects"><span>Selected projects<small>Language, vision, and model workflows.</small></span><ArrowUpRight size={24} aria-hidden="true" /></a><a href="/lab"><span>The learning lab<small>A small experiment you can try.</small></span><ArrowUpRight size={24} aria-hidden="true" /></a></div></section>
+        <section className="aboutpage-contact"><div className="container"><p>Have a project, an opportunity, or a good question?</p><a href="/contact"><span>Let's talk.</span><ArrowRight size={55} aria-hidden="true" /></a></div></section>
+      </main>
+      <SiteFooter />
+    </div>
   )
 }
 

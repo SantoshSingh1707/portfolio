@@ -1,36 +1,133 @@
-import { ArrowLeft, ArrowUpRight, ExternalLink } from 'lucide-react'
-import './Home.css'
+import { useEffect } from 'react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Mail } from 'lucide-react'
+import { Github } from '../components/BrandIcons'
+import SiteFooter from '../components/SiteFooter'
+import SiteHeader from '../components/SiteHeader'
+import ProjectVisual from '../components/ProjectVisual'
+import { portfolio } from '../data/mockData'
+import './ProjectDetail.css'
 
-const details = {
-  'ai-study-tool': {
-    index: '01', type: 'RAG / PRODUCT', title: 'AI STUDY TOOL', category: 'RAG', tone: 'project-lime', github: 'https://github.com/SantoshSingh1707/AI-Study-Tool', summary: 'A full-stack learning companion that turns personal course material into active revision.', problem: 'Long PDFs, DOCX files, and slide decks are difficult to convert into useful study sessions quickly.', approach: 'Built a document ingestion and retrieval pipeline with Sentence-Transformer embeddings, ChromaDB, and LangChain across Mistral AI, Groq, and Gemini.', outcome: 'A single workflow for grounded quizzes, flashcards, and study notes generated from the learner’s own files.', stack: 'PYTHON · FASTAPI · REACT · LANGCHAIN · CHROMADB',
-  },
-  'code-review-agent': {
-    index: '02', type: 'LOCAL AI / AGENT', title: 'CODE REVIEW AGENT', category: 'Agents', tone: 'project-orange', github: 'https://github.com/SantoshSingh1707/code-review-agent', summary: 'A privacy-first local agent for practical Python code feedback.', problem: 'Developers need early feedback on bugs and security issues without sending source code to a hosted model.', approach: 'Wrapped Ollama and CodeLlama in a FastAPI service with pasted-code and file-based analysis, structured findings, and a 0–10 quality score.', outcome: 'Private, testable code review with pytest coverage for the core agent logic.', stack: 'PYTHON · FASTAPI · OLLAMA · CODELLAMA · PYTEST',
-  },
-  'house-price-model': {
-    index: '03', type: 'MLOPS / PIPELINE', title: 'HOUSE PRICE MODEL', category: 'MLOps', tone: 'project-blue', github: 'https://github.com/SantoshSingh1707/House-price-prediction-end-to-end-project', summary: 'A reproducible machine-learning pipeline with traceable experiments.', problem: 'A model is difficult to trust when data preparation and experiments cannot be reproduced.', approach: 'Used ZenML to orchestrate ingestion, preprocessing, feature engineering, and evaluation while MLflow tracked metrics and model versions.', outcome: 'An end-to-end workflow ready for repeatable experimentation and review.', stack: 'PYTHON · ZENML · MLFLOW · SCIKIT-LEARN',
-  },
-  'truthlens-ai': {
-    index: '04', type: 'COMPUTER VISION', title: 'TRUTHLENS AI', category: 'Computer Vision', tone: 'project-red', github: 'https://github.com/SantoshSingh1707/AI-Image-Detection', summary: 'An explainable image-analysis direction for synthetic and manipulated media.', problem: 'Visual inspection alone cannot explain where generated or manipulated image artifacts come from.', approach: 'Explored CNN and transfer-learning models alongside frequency-domain analysis, metadata forensics, and Grad-CAM explanations.', outcome: 'A research direction that pairs image classification with interpretable evidence.', stack: 'TENSORFLOW · EFFICIENTNET · VIT · FFT · OPENCV',
-  },
+function getProjectSlug() {
+  const match = window.location.pathname.match(/^\/projects\/([^/]+)\/?$/)
+  if (!match) return null
+  try {
+    return decodeURIComponent(match[1])
+  } catch {
+    return null
+  }
 }
 
 function ProjectDetail() {
-  const slug = window.location.pathname.split('/').filter(Boolean).pop()
-  const project = details[slug]
+  const slug = getProjectSlug()
+  const projectIndex = portfolio.projects.findIndex((item) => item.slug === slug)
+  const project = portfolio.projects[projectIndex]
+  const nextProject = portfolio.projects[(projectIndex + 1) % portfolio.projects.length]
+
+  useEffect(() => {
+    const previousTitle = document.title
+    const description = document.querySelector('meta[name="description"]')
+    const previousDescription = description?.getAttribute('content')
+    document.title = project
+      ? `${project.title} — ${portfolio.name}`
+      : `Project not found — ${portfolio.name}`
+    description?.setAttribute('content', project ? `${project.title}: ${project.detail}` : 'This project could not be found. Explore Santosh Singh’s AI and machine learning project collection.')
+    return () => {
+      document.title = previousTitle
+      if (previousDescription === null) description?.removeAttribute('content')
+      else if (previousDescription !== undefined) description?.setAttribute('content', previousDescription)
+    }
+  }, [project])
 
   if (!project) {
-    return <main className="stitch-home project-not-found"><p className="stitch-kicker">404 / PROJECT NOT FOUND</p><h1>That case study<br /><i>does not exist.</i></h1><a className="text-link" href="/">BACK TO PORTFOLIO <ArrowLeft size={15} /></a></main>
+    return (
+      <div className="case-page" id="top">
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        <SiteHeader />
+        <main className="container case-not-found" id="main-content" tabIndex={-1}>
+          <span className="case-eyebrow">A small detour / 404</span>
+          <div className="case-error-mark" aria-hidden="true">?</div>
+          <h1>This project is<br />off the board.</h1>
+          <p>The link may have changed. There are four projects waiting for you in my selected work.</p>
+          <a className="button button-primary" href="/projects"><ArrowLeft size={17} aria-hidden="true" /> Back to selected work</a>
+        </main>
+        <SiteFooter />
+      </div>
+    )
   }
 
+  const chapters = [
+    { number: '01', title: 'The challenge', text: project.problem },
+    { number: '02', title: 'How I approached it', text: project.approach },
+    { number: '03', title: 'What came out of it', text: project.outcome },
+  ]
+
   return (
-    <main className="stitch-home project-detail-page">
-      <header className="stitch-header"><a className="stitch-logo" href="/">SS<span>/</span>26</a><p>PROJECT ARCHIVE<br />CASE STUDY / {project.index}</p><span className="header-avatar" aria-hidden="true">S</span><a className="stitch-menu-button back-button" href="/" aria-label="Back to portfolio"><ArrowLeft size={21} /></a></header>
-      <section className={`project-detail-hero ${project.tone}`}><div className="section-number">{project.index} / {project.category}</div><p className="stitch-kicker">{project.type}</p><h1>{project.title}</h1><p className="detail-summary">{project.summary}</p><div className="detail-meta"><span>{project.stack}</span><a href={project.github} target="_blank" rel="noreferrer">OPEN GITHUB <ExternalLink size={14} /></a></div></section>
-      <section className="detail-grid"><article><span>01 / PROBLEM</span><h2>{project.problem}</h2></article><article><span>02 / APPROACH</span><h2>{project.approach}</h2></article><article><span>03 / OUTCOME</span><h2>{project.outcome}</h2></article></section>
-      <section className="detail-footer"><a className="text-link" href="/projects/ai-study-tool"><ArrowLeft size={15} /> FIRST PROJECT</a><a className="text-link" href="/">ALL WORK <ArrowUpRight size={15} /></a></section>
-    </main>
+    <div className="case-page" id="top">
+      <a className="skip-link" href="#main-content">Skip to content</a>
+      <SiteHeader />
+      <main id="main-content" tabIndex={-1}>
+        <section className="container case-intro" aria-labelledby="case-title">
+          <a className="case-back" href="/projects"><ArrowLeft size={16} aria-hidden="true" /> Back to selected work</a>
+          <div className="case-intro-topline">
+            <p className="case-eyebrow"><span aria-hidden="true" /> Project notebook / {project.number}</p>
+            <span className="case-category">{project.category}</span>
+          </div>
+          <div className="case-intro-grid">
+            <h1 id="case-title">{project.title}<span className="case-title-dot">.</span></h1>
+            <div className="case-intro-copy">
+              <p>{project.detail}</p>
+              <a className="case-source-link" href={project.github} target="_blank" rel="noreferrer"><Github size={17} aria-hidden="true" /> Explore the source <ArrowUpRight size={17} aria-hidden="true" /><span className="case-sr-only"> (opens in a new tab)</span></a>
+            </div>
+          </div>
+        </section>
+
+        <section className="container case-showcase" aria-label={`${project.title} project concept`}>
+          <div className="case-visual-frame">
+            <div className="case-visual-toolbar" aria-hidden="true">
+              <span className="case-window-dots"><i /><i /><i /></span>
+              <span>{project.slug} / workspace</span>
+              <span className="case-window-label">PROJECT PREVIEW</span>
+            </div>
+            <div className="case-visual-content"><ProjectVisual tone={project.tone} /></div>
+          </div>
+          <div className="case-project-meta">
+            <div className="case-meta-caption"><span>Built with</span><p>The tools behind the idea.</p></div>
+            <div className="case-tech-list" aria-label="Technologies used">{project.stack.map((item) => <span className="tag" key={item}>{item}</span>)}</div>
+          </div>
+        </section>
+
+        <section className="container case-story" aria-labelledby="case-story-title">
+          <div className="case-story-heading">
+            <p className="case-eyebrow">Behind the build</p>
+            <h2 id="case-story-title">From a question<br />to a working idea.</h2>
+            <p>A closer look at the problem, the decisions, and the result.</p>
+            <div className="case-story-stamp" aria-hidden="true"><span>LEARN.</span><span>BUILD.</span><span>REPEAT. ↗</span></div>
+          </div>
+          <div className="case-chapters">
+            {chapters.map((chapter) => (
+              <article className="case-chapter" key={chapter.number}>
+                <span className="case-chapter-number">{chapter.number}</span>
+                <div><h3>{chapter.title}</h3><p>{chapter.text}</p></div>
+              </article>
+            ))}
+            <a className="button button-primary case-code-button" href={project.github} target="_blank" rel="noreferrer"><Github size={18} aria-hidden="true" /> See the code on GitHub <ArrowUpRight size={17} aria-hidden="true" /><span className="case-sr-only"> (opens in a new tab)</span></a>
+          </div>
+        </section>
+
+        <section className="container case-next-section" aria-label="Next project">
+          <a className={`case-next case-next-${nextProject.tone}`} href={`/projects/${nextProject.slug}`}>
+            <div><span className="case-eyebrow">Keep exploring / {nextProject.number}</span><h2>{nextProject.title}</h2><p>{nextProject.category}</p></div>
+            <span className="case-next-arrow" aria-hidden="true"><ArrowRight size={28} /></span>
+          </a>
+        </section>
+
+        <section className="container case-contact" aria-labelledby="case-contact-title">
+          <div><p className="case-eyebrow">Good ideas start with a conversation</p><h2 id="case-contact-title">Let’s build the next one.</h2></div>
+          <a className="button button-secondary" href="/contact"><Mail size={17} aria-hidden="true" /> Say hello <ArrowUpRight size={17} aria-hidden="true" /></a>
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
   )
 }
 
