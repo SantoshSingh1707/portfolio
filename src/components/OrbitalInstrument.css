@@ -35,7 +35,7 @@
 .oi-instrument i:nth-child(2) {
   width: 113px;
   height: 112px;
-  border-color: var(--signal-citron);
+  border-color: var(--signal-orange-light);
   transform: rotateX(67deg) rotateY(45deg) rotateZ(60deg);
   animation-duration: 24s;
   animation-direction: reverse;
@@ -54,8 +54,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--signal-citron);
-  box-shadow: 0 0 0 4px #d1ed7920;
+  background: var(--signal-orange-light);
+  box-shadow: 0 0 0 4px #ff6b3520;
 }
 
 @keyframes oi-orbit {

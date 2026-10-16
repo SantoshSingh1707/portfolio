@@ -104,7 +104,7 @@ export default function NeuralWorkbench({ className = '' }) {
       const selectedMode = stateRef.current.selected
       context.clearRect(0, 0, width, height)
 
-      context.fillStyle = '#0C0E13'
+      context.fillStyle = '#101010'
       context.fillRect(0, 0, width, height)
 
       // The floor and translucent slices establish depth before the signal paths.
@@ -153,7 +153,7 @@ export default function NeuralWorkbench({ className = '' }) {
           gradient.addColorStop(0.6, 'rgba(241, 122, 90, 0.8)')
           gradient.addColorStop(1, 'rgba(242, 238, 230, 0.9)')
           context.strokeStyle = gradient
-          context.shadowColor = '#7886FF'
+          context.shadowColor = '#FF6B35'
           context.shadowBlur = 4
         } else context.strokeStyle = 'rgba(176, 172, 164, 0.24)'
         context.stroke()
@@ -161,10 +161,10 @@ export default function NeuralWorkbench({ className = '' }) {
         if (active) {
           const progress = (elapsed * 0.22 - edge.from.layer * 0.23 + index * 0.113 + 20) % 1
           const point = curvePoint(a, b, progress)
-          context.strokeStyle = '#F17A5A'
+          context.strokeStyle = '#FF6B35'
           context.lineWidth = 1
           context.beginPath(); context.arc(point.x, point.y, 5, 0, Math.PI * 2); context.stroke()
-          context.fillStyle = '#EEECE5'
+          context.fillStyle = '#F2EEE6'
           context.beginPath(); context.arc(point.x, point.y, 1.6, 0, Math.PI * 2); context.fill()
         }
       })
@@ -176,15 +176,15 @@ export default function NeuralWorkbench({ className = '' }) {
         const radius = (isEndpoint ? 6.8 : 5.2) * point.scale
         if (isEndpoint) hitTargets.push({ ...point, radius: Math.max(17, radius * 2) })
         if (active || pointer.hover === point.node.id) {
-          context.strokeStyle = '#D1ED79'
+          context.strokeStyle = '#FF895D'
           context.lineWidth = 1
           context.beginPath(); context.arc(point.x, point.y, radius * 1.9, 0, Math.PI * 2); context.stroke()
         }
         const body = context.createRadialGradient(point.x - radius * 0.35, point.y - radius * 0.4, 0, point.x, point.y, radius)
-        body.addColorStop(0, active ? '#EEECE5' : '#A8ABB6')
-        body.addColorStop(0.25, active ? '#D1ED79' : '#5E6473')
-        body.addColorStop(0.65, active ? '#7886FF' : '#303545')
-        body.addColorStop(1, active ? '#343C57' : '#151923')
+        body.addColorStop(0, active ? '#F2EEE6' : '#B0ACA4')
+        body.addColorStop(0.25, active ? '#FF895D' : '#68635A')
+        body.addColorStop(0.65, active ? '#FF6B35' : '#68635A')
+        body.addColorStop(1, active ? '#191919' : '#191919')
         context.fillStyle = body
         context.beginPath(); context.arc(point.x, point.y, radius, 0, Math.PI * 2); context.fill()
         context.strokeStyle = active ? 'rgba(242, 238, 230, 0.9)' : 'rgba(176, 172, 164, 0.7)'
@@ -193,7 +193,7 @@ export default function NeuralWorkbench({ className = '' }) {
           const isInput = point.node.layer === 0
           context.font = `${active ? 500 : 400} 10px "Space Mono", monospace`
           context.textAlign = isInput ? 'right' : 'left'
-          context.fillStyle = active ? '#EEECE5' : '#A8ABB6'
+          context.fillStyle = active ? '#F2EEE6' : '#B0ACA4'
           context.fillText(isInput ? MODES[point.node.index].label : MODES[point.node.index].short,
             point.x + (isInput ? -17 : 17), point.y + 3.5)
         }
@@ -201,7 +201,7 @@ export default function NeuralWorkbench({ className = '' }) {
 
       context.font = '500 9px "Space Mono", monospace'
       context.textAlign = 'center'
-      context.fillStyle = '#A8ABB6'
+      context.fillStyle = '#B0ACA4'
       ;[{ x: -3.9, text: 'INPUTS' }, { x: 0, text: 'REPRESENTATION' }, { x: 3.9, text: 'OUTPUTS' }].forEach((label) => {
         const point = projectPoint({ x: label.x, y: 2.4, z: 0 })
         context.fillText(label.text, point.x, point.y)

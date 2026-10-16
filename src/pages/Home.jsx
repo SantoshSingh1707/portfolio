@@ -32,7 +32,7 @@ export default function Home() {
       <SiteHeader />
       <main id="main" tabIndex={-1}>
         <section className="home-introduction container" aria-labelledby="home-title">
-          <div className="home-intro-heading"><p className="home-status"><span />Santosh Singh · AI/ML student</p><h1 id="home-title">Human curiosity.<br />Machine learning.</h1></div>
+          <div className="home-intro-heading"><p className="home-status"><span />Santosh Singh · AI/ML student</p><h1 id="home-title">Human<br className="home-mobile-title-break" /> curiosity.<br />Machine<br className="home-mobile-title-break" /> learning.</h1></div>
           <div className="home-intro-copy"><p>I’m <em>learning</em> how machines learn—and building things along the way.</p><span>Computer Science at DIT, Dehradun · Class of 2027</span><div className="home-intro-actions"><a href="/about">The person behind the projects<ArrowUpRight size={17} aria-hidden="true" /></a><a className="home-intro-resume" href={portfolio.resume} target="_blank" rel="noreferrer">My résumé<ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a></div></div>
           <figure className="home-portrait"><div className="home-portrait-frame"><span className="home-portrait-bar" aria-hidden="true" /><span className="home-portrait-mark" aria-hidden="true">S.</span><OrbitalInstrument /><img src={portrait} alt="Santosh Singh wearing his DIT University hoodie" width="747" height="879" fetchpriority="high" /></div><figcaption><span>{portfolio.name}</span><span>{portfolio.location}<br />Class of 2027</span></figcaption></figure>
         </section>

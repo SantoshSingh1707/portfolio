@@ -27,7 +27,7 @@
 .projectspage-results-heading > span { color: var(--muted); font-size: 10px; }
 .projectspage-collection-gallery { display: grid; gap: 37px; }
 .projectspage-gallery-item { display: grid; grid-template-columns: 1.3fr 1fr; align-items: center; min-width: 0; overflow: hidden; border: 2px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); box-shadow: var(--shadow-neo); transition: transform 180ms var(--ease-out), box-shadow 180ms ease, border-color 180ms ease; }
-.projectspage-gallery-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #04050A; border-color: var(--accent); }
+.projectspage-gallery-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #000000; border-color: var(--accent); }
 .projectspage-visual { position: relative; display: block; width: 100%; aspect-ratio: 1.42; overflow: hidden; isolation: isolate; text-decoration: none; }
 .projectspage-visual > .pv-scene { height: 100%; aspect-ratio: auto; transition: transform 550ms cubic-bezier(.2, .8, .2, 1); }
 .projectspage-visual:hover > .pv-scene { transform: scale(1.025); }
@@ -43,7 +43,7 @@
 .projectspage-stack { display: flex; flex-wrap: wrap; gap: 7px; margin: 23px 0 0; padding: 0; list-style: none; }
 .projectspage-stack > li { padding: 6px 9px; color: var(--accent); border: 2px solid var(--line); border-radius: 3px; background: var(--page); font-size: 9px; line-height: 1.5; }
 .projectspage-project-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; margin-top: 29px; }
-.projectspage-explore { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 43px; padding: 10px 15px; color: var(--accent-ink); border: 2px solid var(--line); border-radius: var(--radius-sm); background: var(--accent); font-size: 11px; text-decoration: none; border-color: var(--accent); box-shadow: 3px 3px 0 #04050A; transition: transform 160ms var(--ease-out), box-shadow 160ms ease, background 160ms ease; }
+.projectspage-explore { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 43px; padding: 10px 15px; color: var(--accent-ink); border: 2px solid var(--line); border-radius: var(--radius-sm); background: var(--accent); font-size: 11px; text-decoration: none; border-color: var(--accent); box-shadow: 3px 3px 0 #000000; transition: transform 160ms var(--ease-out), box-shadow 160ms ease, background 160ms ease; }
 .projectspage-explore:hover { background: var(--accent-dark); }
 .projectspage-explore:active { transform: translate(3px, 3px); box-shadow: none; }
 .projectspage-source { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding-block: 7px; color: var(--muted); font-size: 10px; text-decoration: none; }

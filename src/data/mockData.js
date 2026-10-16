@@ -8,6 +8,7 @@ export const portfolio = {
   projects: [
     {
       number: '01', category: 'Retrieval / learning', title: 'AI Study Tool', slug: 'ai-study-tool', tone: 'study',
+      walkthrough: { src: '/videos/studybench-walkthrough.mp4', poster: '/images/studybench-frame.webp' },
       summary: 'Turns a learner’s PDFs, DOCX files, and slides into source-grounded quizzes, flashcards, and notes.',
       detail: 'A document-first learning tool that turns course material into active revision. The retrieval pipeline grounds generated quizzes, flashcards, and notes in the learner’s own files.',
       problem: 'Course material often lives across long PDFs, Word documents, and slide decks. Turning it into a useful revision session takes time.',

@@ -59,15 +59,15 @@ Palette tokens, all defined in `src/index.css`:
 
 | Token | Value | Role |
 | --- | --- | --- |
-| `--page` | `#0C0E13` | Midnight background |
-| `--surface` | `#151923` | Raised panels |
-| `--ink` | `#EEECE5` | Warm light text |
-| `--muted` | `#A8ABB6` | Secondary text |
-| `--line` | `#303545` | Hairline dividers |
-| `--accent` | `#7886FF` | Signal blue |
-| `--signal-orange` | `#F17A5A` | Orange markers |
-| `--signal-citron` | `#D1ED79` | Citron highlights |
-| `--deep-blue` | `#232B63` | Field notes section |
+| `--page` | `#101010` | Charcoal page field |
+| `--surface` | `#191919` | Raised panels |
+| `--ink` | `#F2EEE6` | Warm white text |
+| `--muted` | `#B0ACA4` | Secondary text |
+| `--line` | `#68635A` | Visible rules and borders |
+| `--accent` | `#FF6B35` | Safety orange emphasis |
+| `--accent-dark` | `#FF895D` | Lighter orange hover state |
+
+The visual treatment uses oversized type, squared edges, 2px borders, and offset hard shadows. Orange surfaces use charcoal text for contrast. The AI Study Tool case study includes a playable Studybench walkthrough and a framed still taken from its video.
 
 Typefaces, loaded from Google Fonts at the top of `index.css`:
 
@@ -78,11 +78,11 @@ Typefaces, loaded from Google Fonts at the top of `index.css`:
 | DM Sans | Body copy and interface text |
 | Space Mono | Metadata and labels only |
 
-House rules are enforced by hand: square corners with a 2px to 4px radius ceiling, 1px dividers, sentence-case headlines, decorative SVG and canvas work marked `aria-hidden`, one focus ring on everything keyboard reachable, and motion switched off under `prefers-reduced-motion`.
+House rules are enforced by hand: square corners, 2px borders, sentence-case headlines, decorative SVG and canvas work marked `aria-hidden`, visible keyboard focus, and motion switched off under `prefers-reduced-motion`.
 
 ## Accessibility
 
-A skip link points at `#main`, which takes focus when navigation lands. Focus is always visible. Canvas and artwork are hidden from screen readers, the portrait and project visuals carry alt text, and the pointer-tilt instrument stays still whenever the operating system reports reduced motion or a touch screen.
+A skip link points at `#main`, which takes focus when navigation lands. Focus is always visible. Canvas and decorative artwork are hidden from screen readers, the portrait has descriptive alt text, and the project walkthrough has native video controls. The pointer-tilt instrument stays still whenever the operating system reports reduced motion or a touch screen.
 
 ## Deployment
 

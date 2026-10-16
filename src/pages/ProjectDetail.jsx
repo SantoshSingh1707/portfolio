@@ -96,6 +96,21 @@ function ProjectDetail() {
           </div>
         </section>
 
+        {project.walkthrough && <section className="container case-demo" aria-labelledby="case-demo-title">
+          <div className="case-demo-heading">
+            <p className="case-eyebrow"><span aria-hidden="true" /> Project footage / 01</p>
+            <h2 id="case-demo-title">See it in motion.</h2>
+            <p>A short walkthrough of Studybench: bring in a course PDF, shape a quiz, and review notes grounded in the source.</p>
+          </div>
+          <figure className="case-demo-player">
+            <video controls playsInline preload="metadata" poster={project.walkthrough.poster} aria-label="AI Study Tool project walkthrough video">
+              <source src={project.walkthrough.src} type="video/mp4" />
+              Your browser does not support the project walkthrough video.
+            </video>
+            <figcaption><span>Studybench / Local reading room</span><span>Product walkthrough</span></figcaption>
+          </figure>
+        </section>}
+
         <section className="container case-story" aria-labelledby="case-story-title">
           <div className="case-story-heading">
             <p className="case-eyebrow">Behind the build</p>

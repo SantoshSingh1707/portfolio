@@ -61,8 +61,8 @@
 .contactpage-elsewhere-heading > p { max-width: 230px; margin: 0 0 2px; color: var(--muted); font-size: 12px; line-height: 1.8; }
 .contactpage-social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
 .contactpage-social { display: flex; flex-direction: column; padding: 27px; min-width: 0; min-height: 290px; background: var(--surface); border: 2px solid var(--line); border-radius: var(--radius-sm); text-decoration: none; box-shadow: var(--shadow-neo); transition: background-color 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out), box-shadow 160ms ease; }
-.contactpage-social:hover { transform: translate(-2px, -2px); border-color: var(--accent); background: #1B2030; box-shadow: 5px 5px 0 #04050A; }
-.contactpage-social:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 #04050A; }
+.contactpage-social:hover { transform: translate(-2px, -2px); border-color: var(--accent); background: #242424; box-shadow: 5px 5px 0 #000000; }
+.contactpage-social:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 #000000; }
 .contactpage-social-top { display: flex; align-items: center; gap: 12px; }
 .contactpage-social-top > span { color: var(--muted); font-size: 9px; }
 .contactpage-social-top > svg:last-child { margin-left: auto; transition: transform 180ms; }
