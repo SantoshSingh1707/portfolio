@@ -1,5 +1,6 @@
+import { Link } from "@tanstack/react-router"
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Pause, Play } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { portfolio } from '../data/mockData'
 import './NeuralWorkbench.css'
 
@@ -34,13 +35,6 @@ function isActiveNode(node, selected) {
   return node.index === selected % 6 || node.index === (selected + 2) % 6
 }
 
-function curvePoint(a, b, t) {
-  const u = 1 - t
-  const reach = (b.x - a.x) * 0.42
-  const eased = t * t * (3 - 2 * t)
-  return { x: u ** 3 * a.x + 3 * u ** 2 * t * (a.x + reach) + 3 * u * t ** 2 * (b.x - reach) + t ** 3 * b.x, y: a.y + (b.y - a.y) * eased }
-}
-
 function traceCurve(context, a, b) {
   const reach = (b.x - a.x) * 0.42
   context.moveTo(a.x, a.y)
@@ -50,26 +44,16 @@ function traceCurve(context, a, b) {
 export default function NeuralWorkbench({ className = '' }) {
   const stageRef = useRef(null)
   const canvasRef = useRef(null)
-  const stateRef = useRef({ selected: 0, motion: true })
+  const stateRef = useRef({ selected: 0 })
   const redrawRef = useRef(null)
   const [selected, setSelected] = useState(0)
-  const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  const [motionOverride, setMotionOverride] = useState(null)
-  const motionEnabled = motionOverride ?? !reducedMotion
   const mode = MODES[selected]
   const project = portfolio.projects.find((item) => item.tone === mode.tone)
 
   useEffect(() => {
-    stateRef.current = { selected, motion: motionEnabled }
+    stateRef.current = { selected }
     redrawRef.current?.()
-  }, [selected, motionEnabled])
-
-  useEffect(() => {
-    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const onChange = (event) => { setReducedMotion(event.matches); setMotionOverride(null) }
-    query.addEventListener('change', onChange)
-    return () => query.removeEventListener('change', onChange)
-  }, [])
+  }, [selected])
 
   useEffect(() => {
     const stage = stageRef.current
@@ -79,21 +63,16 @@ export default function NeuralWorkbench({ className = '' }) {
     if (!context) return undefined
     let width = 900
     let height = 460
-    let frame = 0
-    let lastFrame = 0
-    let elapsed = 0
-    let inView = true
     let disposed = false
     let hitTargets = []
-    const pointer = { x: 0, y: 0, targetX: 0, targetY: 0, hover: null }
+    const pointer = { hover: null, drag: null }
+    const rotation = { x: 0.19, y: -0.16 }
 
     const projectPoint = (point) => {
-      const ay = -0.16 + pointer.x * 0.12
-      const ax = 0.19 + pointer.y * 0.1
-      const x = point.x * Math.cos(ay) + point.z * Math.sin(ay)
-      const z = -point.x * Math.sin(ay) + point.z * Math.cos(ay)
-      const y = point.y * Math.cos(ax) - z * Math.sin(ax)
-      const depth = point.y * Math.sin(ax) + z * Math.cos(ax)
+      const x = point.x * Math.cos(rotation.y) + point.z * Math.sin(rotation.y)
+      const z = -point.x * Math.sin(rotation.y) + point.z * Math.cos(rotation.y)
+      const y = point.y * Math.cos(rotation.x) - z * Math.sin(rotation.x)
+      const depth = point.y * Math.sin(rotation.x) + z * Math.cos(rotation.x)
       const perspective = 9.5 / (9.5 - depth)
       const scale = Math.min(width / 10.1, height / 5.6)
       return { x: width / 2 + x * scale * perspective, y: height * 0.52 - y * scale * perspective, z: depth, scale: perspective }
@@ -104,11 +83,11 @@ export default function NeuralWorkbench({ className = '' }) {
       const selectedMode = stateRef.current.selected
       context.clearRect(0, 0, width, height)
 
-      context.fillStyle = '#101010'
+      context.fillStyle = '#101A35'
       context.fillRect(0, 0, width, height)
 
       // The floor and translucent slices establish depth before the signal paths.
-      context.strokeStyle = 'rgba(176, 172, 164, 0.18)'
+      context.strokeStyle = 'rgba(168, 183, 208, 0.22)'
       context.lineWidth = 0.8
       context.beginPath()
       for (let x = -5; x <= 5; x += 0.5) {
@@ -131,9 +110,9 @@ export default function NeuralWorkbench({ className = '' }) {
         context.beginPath()
         corners.forEach((point, cornerIndex) => cornerIndex ? context.lineTo(point.x, point.y) : context.moveTo(point.x, point.y))
         context.closePath()
-        context.fillStyle = 'rgba(176, 172, 164, 0.045)'
+        context.fillStyle = 'rgba(168, 183, 208, 0.055)'
         context.fill()
-        context.strokeStyle = index === 1 || index === 2 ? 'rgba(176, 172, 164, 0.38)' : 'rgba(176, 172, 164, 0.24)'
+        context.strokeStyle = index === 1 || index === 2 ? 'rgba(168, 183, 208, 0.42)' : 'rgba(168, 183, 208, 0.28)'
         context.lineWidth = 1
         context.stroke()
       })
@@ -149,24 +128,15 @@ export default function NeuralWorkbench({ className = '' }) {
         context.lineWidth = active ? 1.3 : 0.65
         if (active) {
           const gradient = context.createLinearGradient(a.x, a.y, b.x, b.y)
-          gradient.addColorStop(0, 'rgba(241, 122, 90, 0.9)')
-          gradient.addColorStop(0.6, 'rgba(241, 122, 90, 0.8)')
-          gradient.addColorStop(1, 'rgba(242, 238, 230, 0.9)')
+          gradient.addColorStop(0, 'rgba(100, 77, 235, 0.95)')
+          gradient.addColorStop(0.6, 'rgba(0, 207, 232, 0.9)')
+          gradient.addColorStop(1, 'rgba(243, 246, 255, 0.95)')
           context.strokeStyle = gradient
-          context.shadowColor = '#FF6B35'
+          context.shadowColor = '#B69CFF'
           context.shadowBlur = 4
-        } else context.strokeStyle = 'rgba(176, 172, 164, 0.24)'
+        } else context.strokeStyle = 'rgba(168, 183, 208, 0.28)'
         context.stroke()
         context.shadowBlur = 0
-        if (active) {
-          const progress = (elapsed * 0.22 - edge.from.layer * 0.23 + index * 0.113 + 20) % 1
-          const point = curvePoint(a, b, progress)
-          context.strokeStyle = '#FF6B35'
-          context.lineWidth = 1
-          context.beginPath(); context.arc(point.x, point.y, 5, 0, Math.PI * 2); context.stroke()
-          context.fillStyle = '#F2EEE6'
-          context.beginPath(); context.arc(point.x, point.y, 1.6, 0, Math.PI * 2); context.fill()
-        }
       })
 
       hitTargets = []
@@ -176,24 +146,24 @@ export default function NeuralWorkbench({ className = '' }) {
         const radius = (isEndpoint ? 6.8 : 5.2) * point.scale
         if (isEndpoint) hitTargets.push({ ...point, radius: Math.max(17, radius * 2) })
         if (active || pointer.hover === point.node.id) {
-          context.strokeStyle = '#FF895D'
+          context.strokeStyle = '#54F1E5'
           context.lineWidth = 1
           context.beginPath(); context.arc(point.x, point.y, radius * 1.9, 0, Math.PI * 2); context.stroke()
         }
         const body = context.createRadialGradient(point.x - radius * 0.35, point.y - radius * 0.4, 0, point.x, point.y, radius)
-        body.addColorStop(0, active ? '#F2EEE6' : '#B0ACA4')
-        body.addColorStop(0.25, active ? '#FF895D' : '#68635A')
-        body.addColorStop(0.65, active ? '#FF6B35' : '#68635A')
-        body.addColorStop(1, active ? '#191919' : '#191919')
+        body.addColorStop(0, active ? '#EAF3FF' : '#A6B6CC')
+        body.addColorStop(0.25, active ? '#54F1E5' : '#50617B')
+        body.addColorStop(0.65, active ? '#B69CFF' : '#50617B')
+        body.addColorStop(1, active ? '#121C2D' : '#121C2D')
         context.fillStyle = body
         context.beginPath(); context.arc(point.x, point.y, radius, 0, Math.PI * 2); context.fill()
-        context.strokeStyle = active ? 'rgba(242, 238, 230, 0.9)' : 'rgba(176, 172, 164, 0.7)'
+        context.strokeStyle = active ? 'rgba(243, 246, 255, 0.95)' : 'rgba(168, 183, 208, 0.78)'
         context.lineWidth = 0.8; context.stroke()
         if (isEndpoint && width > 480) {
           const isInput = point.node.layer === 0
           context.font = `${active ? 500 : 400} 10px "Space Mono", monospace`
           context.textAlign = isInput ? 'right' : 'left'
-          context.fillStyle = active ? '#F2EEE6' : '#B0ACA4'
+          context.fillStyle = active ? '#EAF3FF' : '#A6B6CC'
           context.fillText(isInput ? MODES[point.node.index].label : MODES[point.node.index].short,
             point.x + (isInput ? -17 : 17), point.y + 3.5)
         }
@@ -201,33 +171,15 @@ export default function NeuralWorkbench({ className = '' }) {
 
       context.font = '500 9px "Space Mono", monospace'
       context.textAlign = 'center'
-      context.fillStyle = '#B0ACA4'
+      context.fillStyle = '#A6B6CC'
       ;[{ x: -3.9, text: 'INPUTS' }, { x: 0, text: 'REPRESENTATION' }, { x: 3.9, text: 'OUTPUTS' }].forEach((label) => {
         const point = projectPoint({ x: label.x, y: 2.4, z: 0 })
         context.fillText(label.text, point.x, point.y)
       })
     }
 
-    const tick = (now) => {
-      frame = 0
-      if (disposed || !inView || document.hidden || !stateRef.current.motion) return
-      if (now - lastFrame >= 1000 / 30) {
-        const delta = lastFrame ? Math.min((now - lastFrame) / 1000, 0.065) : 0
-        elapsed += delta
-        lastFrame = now
-        pointer.x += (pointer.targetX - pointer.x) * 0.09
-        pointer.y += (pointer.targetY - pointer.y) * 0.09
-        draw()
-      }
-      frame = requestAnimationFrame(tick)
-    }
-
     const update = () => {
-      cancelAnimationFrame(frame)
-      frame = 0
-      lastFrame = 0
       draw()
-      if (!disposed && inView && !document.hidden && stateRef.current.motion) frame = requestAnimationFrame(tick)
     }
     redrawRef.current = update
     const resize = () => {
@@ -242,12 +194,6 @@ export default function NeuralWorkbench({ className = '' }) {
     }
     const resizeObserver = new ResizeObserver(resize)
     resizeObserver.observe(stage)
-    const intersectionObserver = 'IntersectionObserver' in window ? new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting
-      update()
-    }, { rootMargin: '60px' }) : null
-    intersectionObserver?.observe(stage)
-
     const pointerPosition = (event) => {
       const bounds = canvas.getBoundingClientRect()
       return { x: event.clientX - bounds.left, y: event.clientY - bounds.top }
@@ -255,36 +201,66 @@ export default function NeuralWorkbench({ className = '' }) {
     const findTarget = (position) => hitTargets.find((target) => Math.hypot(target.x - position.x, target.y - position.y) <= target.radius)
     const onMove = (event) => {
       const position = pointerPosition(event)
-      pointer.hover = findTarget(position)?.node.id ?? null
-      canvas.style.cursor = pointer.hover ? 'pointer' : 'default'
-      if (event.pointerType !== 'touch' && stateRef.current.motion) {
-        pointer.targetX = position.x / width * 2 - 1
-        pointer.targetY = position.y / height * 2 - 1
+      if (pointer.drag) {
+        const dx = event.clientX - pointer.drag.x
+        const dy = event.clientY - pointer.drag.y
+        if (Math.abs(dx) + Math.abs(dy) > 2) pointer.drag.moved = true
+        rotation.y = Math.max(-0.9, Math.min(0.9, pointer.drag.rotationY + dx * 0.006))
+        rotation.x = Math.max(-0.8, Math.min(0.8, pointer.drag.rotationX - dy * 0.006))
+        draw()
+        return
       }
-      if (!stateRef.current.motion) draw()
+      pointer.hover = findTarget(position)?.node.id ?? null
+      canvas.style.cursor = pointer.hover ? 'pointer' : 'grab'
+      draw()
     }
-    const onLeave = () => { pointer.targetX = 0; pointer.targetY = 0; pointer.hover = null; if (!stateRef.current.motion) draw() }
-    const onSelect = (event) => {
-      const target = findTarget(pointerPosition(event))
-      if (target) setSelected(target.node.index)
+    const onDown = (event) => {
+      if (event.button !== undefined && event.button !== 0) return
+      pointer.drag = { x: event.clientX, y: event.clientY, rotationX: rotation.x, rotationY: rotation.y, moved: false }
+      canvas.setPointerCapture?.(event.pointerId)
+    }
+    const onUp = (event) => {
+      if (!pointer.drag) return
+      const wasDragged = pointer.drag.moved
+      pointer.drag = null
+      if (canvas.hasPointerCapture?.(event.pointerId)) canvas.releasePointerCapture(event.pointerId)
+      if (!wasDragged) {
+        const target = findTarget(pointerPosition(event))
+        if (target) setSelected(target.node.index)
+      }
+      draw()
+    }
+    const onLeave = () => { if (!pointer.drag) { pointer.hover = null; draw() } }
+    const onKeyDown = (event) => {
+      const step = event.shiftKey ? 0.16 : 0.08
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault()
+        rotation.y = Math.max(-0.9, Math.min(0.9, rotation.y + (event.key === 'ArrowLeft' ? -step : step)))
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        event.preventDefault()
+        rotation.x = Math.max(-0.8, Math.min(0.8, rotation.x + (event.key === 'ArrowUp' ? -step : step)))
+      } else return
+      draw()
     }
     canvas.addEventListener('pointermove', onMove)
     canvas.addEventListener('pointerleave', onLeave)
-    canvas.addEventListener('pointerdown', onSelect)
-    document.addEventListener('visibilitychange', update)
+    canvas.addEventListener('pointerdown', onDown)
+    canvas.addEventListener('pointerup', onUp)
+    canvas.addEventListener('pointercancel', onUp)
+    canvas.addEventListener('keydown', onKeyDown)
     resize()
     update()
 
     return () => {
       disposed = true
       redrawRef.current = null
-      cancelAnimationFrame(frame)
       resizeObserver.disconnect()
-      intersectionObserver?.disconnect()
       canvas.removeEventListener('pointermove', onMove)
       canvas.removeEventListener('pointerleave', onLeave)
-      canvas.removeEventListener('pointerdown', onSelect)
-      document.removeEventListener('visibilitychange', update)
+      canvas.removeEventListener('pointerdown', onDown)
+      canvas.removeEventListener('pointerup', onUp)
+      canvas.removeEventListener('pointercancel', onUp)
+      canvas.removeEventListener('keydown', onKeyDown)
     }
   }, [])
 
@@ -301,15 +277,10 @@ export default function NeuralWorkbench({ className = '' }) {
       </div>
       <div className="nw-layout">
         <div className="nw-stage" ref={stageRef}>
-          <canvas className="nw-canvas" ref={canvasRef} aria-hidden="true" />
-          <span className="nw-stage-note">A project map, inspired by neural networks.</span>
-          <button className="nw-motion" type="button" aria-pressed={!motionEnabled}
-            aria-label={motionEnabled ? 'Pause network motion' : 'Resume network motion'} onClick={() => setMotionOverride(!motionEnabled)}>
-            {motionEnabled ? <Pause size={11} aria-hidden="true" /> : <Play size={11} aria-hidden="true" />}
-            {motionEnabled ? 'Pause motion' : 'Resume motion'}
-          </button>
+          <canvas className="nw-canvas" ref={canvasRef} role="img" aria-label="Interactive 3D neural network. Drag to rotate, select an input or output node, or use the arrow keys." aria-describedby="nw-stage-note" tabIndex={0} />
+          <span className="nw-stage-note" id="nw-stage-note">Drag to rotate · Select a node · Arrow keys also work</span>
         </div>
-        <aside className="nw-inspector" aria-live="polite" aria-atomic="true">
+        <aside className="nw-inspector" key={selected} aria-live="polite" aria-atomic="true">
           <div className="nw-inspector-top"><span>Selected pathway</span><span className="nw-path-index">0{selected + 1} / 04</span></div>
           <div className="nw-project-category">{project?.category}</div>
           <h2 className="nw-project-title">{project?.title}</h2>
@@ -319,7 +290,7 @@ export default function NeuralWorkbench({ className = '' }) {
             <li><span className="nw-pathway-key">Process</span><span>{mode.process}</span></li>
             <li><span className="nw-pathway-key">Output</span><span>{mode.output}</span></li>
           </ol>
-          <a className="nw-project-link" href={`/projects/${project?.slug}`}>Explore project<ArrowUpRight size={17} aria-hidden="true" /></a>
+          <Link className="nw-project-link" to={`/projects/${project?.slug}`}>Explore project<ArrowUpRight size={17} aria-hidden="true" /></Link>
         </aside>
       </div>
     </section>

@@ -1,0 +1,47 @@
+.skill-constellation-section { grid-column: 1 / -1; padding-top: 32px; }
+.skill-constellation-section__heading { display: flex; align-items: baseline; gap: 18px 25px; flex-wrap: wrap; margin-bottom: 20px; }
+.skill-constellation-section__heading h3 { margin: 0; color: var(--ink); font: 550 clamp(25px, 3vw, 38px)/1.1 var(--display); }
+.skill-constellation-section__heading p { flex-basis: 100%; max-width: 620px; margin: -5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.skill-constellation-frame { height: 515px; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(ellipse at center, #162541 0, #101725 55%, #080B14 100%); box-shadow: var(--shadow-neo); }
+.skill-constellation-frame:focus-visible { outline-offset: -4px; }
+.skill-constellation-frame .interactive-3d-frame__hint { top: 12px; bottom: auto; left: 12px; }
+.skill-constellation { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+.skill-constellation__links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.skill-constellation__links path { fill: none; stroke: #50617B; stroke-width: .25; stroke-dasharray: 1 1.1; }
+.skill-constellation__links circle { fill: var(--signal-cyan); filter: drop-shadow(0 0 1px var(--signal-cyan)); }
+.skill-constellation__group { position: absolute; z-index: 1; top: var(--group-y); left: var(--group-x); width: min(35%, 365px); min-height: 150px; padding: 15px 17px; border: 1px solid #34445F; background: linear-gradient(145deg, rgb(20 31 50 / 96%), rgb(13 20 34 / 97%)); box-shadow: 0 14px 30px rgb(0 0 0 / 25%); transform: translate(-50%, -50%) translateZ(var(--group-z)); transform-style: preserve-3d; transition: transform 180ms ease; }
+.skill-constellation__group.is-active { border-color: var(--signal-violet); box-shadow: 0 0 25px rgb(182 156 255 / 12%), 0 18px 32px rgb(0 0 0 / 30%); }
+.skill-constellation__hub { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 34px; padding: 0 0 10px; border: 0; border-bottom: 1px solid #34445F; color: var(--ink); background: transparent; font-size: 12px; font-weight: 650; text-align: left; cursor: pointer; }
+.skill-constellation__hub > span { color: var(--signal-cyan); font: 8px var(--mono); }
+.skill-constellation__group.is-active .skill-constellation__hub { color: var(--signal-violet); }
+.skill-constellation__nodes { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 11px; }
+.skill-constellation__node { min-height: 27px; padding: 6px 8px; border: 1px solid #34445F; color: var(--muted); background: #0B1220; font-size: 9px; line-height: 1.2; cursor: pointer; }
+.skill-constellation__node:hover, .skill-constellation__node.is-selected { border-color: var(--signal-cyan); color: var(--accent-ink); background: var(--signal-cyan); }
+.skill-constellation__node:focus-visible, .skill-constellation__hub:focus-visible { outline: 2px solid var(--signal-cyan); outline-offset: 3px; }
+.skill-constellation__core { position: absolute; z-index: 0; top: 49%; left: 50%; display: grid; place-items: center; width: 70px; height: 70px; border: 1px solid var(--signal-cyan); color: var(--signal-cyan); background: #080B14; box-shadow: 0 0 30px rgb(84 241 229 / 20%); font: 15px var(--display); transform: translate(-50%, -50%) translateZ(50px); }
+.skill-constellation__core i { position: absolute; inset: -13px; border: 1px solid rgb(84 241 229 / 40%); border-radius: 50%; transform: rotateX(68deg) rotateY(24deg); }
+.skill-constellation__core i:nth-child(3) { transform: rotateX(18deg) rotateY(70deg); border-color: rgb(182 156 255 / 50%); }
+.skill-constellation__core i:nth-child(4) { inset: -23px; transform: rotateX(74deg) rotateY(-42deg); border-color: rgb(182 156 255 / 33%); }
+.skill-constellation__readout { position: absolute; right: 50%; bottom: 20px; display: flex; align-items: center; gap: 9px; min-height: 35px; padding: 7px 11px; border: 1px solid #34445F; color: var(--muted); background: rgb(8 11 20 / 92%); transform: translateX(50%) translateZ(32px); white-space: nowrap; }
+.skill-constellation__readout > span { color: var(--signal-cyan); font: 8px var(--mono); }
+.skill-constellation__readout strong { color: var(--ink); font-size: 10px; font-weight: 600; }
+.skill-constellation__readout small { font-size: 8px; }
+
+@media (max-width: 760px) {
+  .skill-constellation-frame { height: 850px; }
+  .skill-constellation__group { width: min(86%, 390px); min-height: 145px; }
+  .skill-constellation__group:nth-of-type(1) { --group-x: 50% !important; --group-y: 13% !important; }
+  .skill-constellation__group:nth-of-type(2) { --group-x: 50% !important; --group-y: 37% !important; }
+  .skill-constellation__group:nth-of-type(3) { --group-x: 50% !important; --group-y: 61% !important; }
+  .skill-constellation__group:nth-of-type(4) { --group-x: 50% !important; --group-y: 85% !important; }
+  .skill-constellation__core, .skill-constellation__links { display: none; }
+  .skill-constellation__readout { bottom: 13px; max-width: calc(100% - 30px); white-space: normal; flex-wrap: wrap; justify-content: center; gap: 5px 8px; }
+  .skill-constellation__readout small { display: none; }
+  .skill-constellation-section__heading { display: block; }
+  .skill-constellation-section__heading h3 { margin-top: 12px; }
+  .skill-constellation-section__heading p { margin-top: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-constellation__group, .skill-constellation__node { transition: none; }
+}

@@ -16,7 +16,7 @@ function WindowBar({ name, dark = false, children }) {
 }
 
 function NeuralGlyph() {
-  return <svg className="pv-neural-glyph" viewBox="0 0 64 48" fill="none"><path d="M8 8 32 8M8 8 32 24M8 8 32 40M8 24 32 8M8 24 32 24M8 24 32 40M8 40 32 8M8 40 32 24M8 40 32 40M32 8 56 16M32 8 56 32M32 24 56 16M32 24 56 32M32 40 56 16M32 40 56 32" stroke="currentColor" strokeOpacity=".35" strokeWidth=".8" />{[[8, 8], [8, 24], [8, 40], [32, 8], [32, 24], [32, 40], [56, 16], [56, 32]].map(([cx, cy]) => <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="3" fill="#F2EEE6" stroke="currentColor" strokeWidth="1.2" />)}</svg>
+  return <svg className="pv-neural-glyph" viewBox="0 0 64 48" fill="none"><path d="M8 8 32 8M8 8 32 24M8 8 32 40M8 24 32 8M8 24 32 24M8 24 32 40M8 40 32 8M8 40 32 24M8 40 32 40M32 8 56 16M32 8 56 32M32 24 56 16M32 24 56 32M32 40 56 16M32 40 56 32" stroke="currentColor" strokeOpacity=".35" strokeWidth=".8" />{[[8, 8], [8, 24], [8, 40], [32, 8], [32, 24], [32, 40], [56, 16], [56, 32]].map(([cx, cy]) => <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="3" fill="#EAF3FF" stroke="currentColor" strokeWidth="1.2" />)}</svg>
 }
 
 function StudyPreview() {
@@ -79,7 +79,7 @@ function ReviewPreview() {
 }
 
 function HouseGlyph() {
-  return <svg className="pv-house-glyph" viewBox="0 0 52 52" fill="none"><path d="M7 25 26 8l19 17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /><path d="M12 22v23h28V22" fill="#F2EEE6" stroke="currentColor" strokeWidth="2" /><path d="M22 45V31h9v14" fill="#FF6B35" /><path d="M16 27h4v5h-4zm18 0h4v5h-4z" fill="currentColor" /></svg>
+  return <svg className="pv-house-glyph" viewBox="0 0 52 52" fill="none"><path d="M7 25 26 8l19 17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /><path d="M12 22v23h28V22" fill="#EAF3FF" stroke="currentColor" strokeWidth="2" /><path d="M22 45V31h9v14" fill="#B69CFF" /><path d="M16 27h4v5h-4zm18 0h4v5h-4z" fill="currentColor" /></svg>
 }
 
 function ChartPreview() {
@@ -96,7 +96,7 @@ function ChartPreview() {
               <path className="pv-chart-fill" d="M9 92C37 88 43 65 70 70S112 43 140 49S182 27 211 33S257 14 290 19V105H9Z" />
               <path className="pv-chart-secondary" d="M9 97C38 97 41 85 70 83S113 71 140 74S183 53 211 57S257 43 290 46" />
               <path className="pv-chart-primary" d="M9 92C37 88 43 65 70 70S112 43 140 49S182 27 211 33S257 14 290 19" />
-              <circle cx="211" cy="33" r="4.5" fill="#FF6B35" stroke="#F2EEE6" strokeWidth="3" />
+              <circle cx="211" cy="33" r="4.5" fill="#B69CFF" stroke="#EAF3FF" strokeWidth="3" />
             </svg>
             <div className="pv-chart-axis"><span>Earlier runs</span><span>Illustrative trend</span><span>Recent runs</span></div>
           </div>

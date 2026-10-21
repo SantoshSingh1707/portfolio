@@ -1,4 +1,4 @@
-.lab-page { background: var(--page); }
+.lab-page { background: var(--page-mesh); }
 .lab-intro { display: grid; grid-template-columns: 1.3fr .7fr; gap: 90px; align-items: end; padding-block: 62px 60px; }
 .lab-page-label { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--accent); font-size: 11px; }
 .lab-page-label > span { width: 6px; height: 6px; background: var(--accent); border-radius: 0; }

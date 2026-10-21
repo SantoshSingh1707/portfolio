@@ -1,4 +1,4 @@
-﻿.aboutpage { min-height: 100vh; color: var(--ink); background: var(--page); }
+.aboutpage { min-height: 100dvh; color: var(--ink); background: var(--page-mesh); }
 .aboutpage main:focus { outline: none; }
 .aboutpage-hero { padding-top: 31px; padding-bottom: 88px; }
 .aboutpage-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 32px; color: var(--muted); font-size: 11px; }
@@ -20,7 +20,7 @@
 .aboutpage-portrait-stage { position: relative; aspect-ratio: .84; overflow: hidden; border: 2px solid var(--line); background: var(--surface); box-shadow: var(--shadow-neo); transform: rotate(3deg); }
 .aboutpage-portrait-stage::before { position: absolute; content: ''; width: 115%; aspect-ratio: 1; left: -7%; bottom: -30%; border-radius: 0; background: var(--accent); box-shadow: none; }
 .aboutpage-portrait-stage::after { position: absolute; z-index: 3; content: ''; inset: 70% 0 0; background: transparent; pointer-events: none; }
-.aboutpage-portrait-year { position: absolute; top: 22px; right: 18px; color: transparent; -webkit-text-stroke: 1px var(--line); font-family: var(--display, sans-serif); font-size: clamp(140px, 15vw, 220px); font-weight: 600; letter-spacing: -.03em; line-height: .9; }
+.aboutpage-portrait-year { position: absolute; top: 22px; right: 18px; color: transparent; -webkit-text-stroke: 1px var(--line); font-family: var(--display, sans-serif); font-size: clamp(140px, 15vw, 220px); font-weight: 600; letter-spacing: -.03em; line-height: .9; overflow: visible; padding-bottom: .18em; }
 .aboutpage-portrait-orbit { position: absolute; width: 93%; height: 65%; left: 3%; top: 23%; border: 2px solid var(--line); border-radius: 0; transform: rotate(-28deg); }
 .aboutpage-portrait-stage img { position: absolute; z-index: 2; height: 94%; width: 100%; left: 0; bottom: -17px; object-fit: contain; object-position: bottom; filter: grayscale(1) contrast(1.05); }
 .aboutpage-portrait-plus { position: absolute; z-index: 4; left: 22px; bottom: 20px; color: var(--accent-ink); font-size: 37px; line-height: 1; font-weight: 300; }
@@ -35,6 +35,20 @@
 .aboutpage-story-copy p { margin: 0 0 18px; color: var(--muted); font-size: 13px; line-height: 1.9; }
 .aboutpage-story-copy p:last-child { margin-bottom: 0; }
 .aboutpage-story-copy .aboutpage-lead { margin-bottom: 23px; color: var(--ink); font-size: 21px; line-height: 1.65; letter-spacing: -.02em; }
+.aboutpage-learning { padding-block: 84px; border-bottom: 2px solid var(--line); background: var(--page); }
+.aboutpage-learning-inner { display: grid; grid-template-columns: .8fr 1.2fr; align-items: start; gap: 100px; }
+.aboutpage-learning-heading h2 { margin: 24px 0 20px; font-family: var(--display, sans-serif); font-size: clamp(54px, 5.8vw, 82px); font-weight: 600; line-height: .96; letter-spacing: -.03em; overflow: visible; padding-bottom: .18em; }
+.aboutpage-learning-heading > p { max-width: 300px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.85; }
+.aboutpage-learning-heading time { display: block; margin-top: 28px; color: var(--muted); font-family: var(--mono); font-size: 9px; line-height: 1.6; }
+.aboutpage-learning-list { margin: 0; padding: 0; border-top: 2px solid var(--line); list-style: none; }
+.aboutpage-learning-item { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 16px; padding: 23px 0 25px; border-bottom: 2px solid var(--line); }
+.aboutpage-learning-number { padding-top: 3px; color: var(--accent); font-family: var(--mono); font-size: 10px; }
+.aboutpage-learning-label { color: var(--muted); font-family: var(--mono); font-size: 9px; letter-spacing: .05em; text-transform: uppercase; }
+.aboutpage-learning-item h3 { margin: 10px 0; font-family: var(--display, sans-serif); font-size: clamp(23px, 2.6vw, 34px); font-weight: 550; line-height: 1.12; letter-spacing: -.02em; overflow: visible; padding-bottom: .08em; }
+.aboutpage-learning-item p { max-width: 550px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.aboutpage-learning-item a { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; margin-top: 10px; color: var(--accent); font-size: 10px; text-decoration: none; }
+.aboutpage-learning-item a:hover { color: var(--ink); }
+.aboutpage-learning-item a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .aboutpage-journey { display: grid; grid-template-columns: .8fr 1.2fr; align-items: start; gap: 110px; padding-block: 90px; }
 .aboutpage-journey-heading h2 { margin: 25px 0 22px; font-size: clamp(55px, 6vw, 83px); font-weight: 600; line-height: .96; letter-spacing: -.03em; }
 .aboutpage-journey-heading p { max-width: 260px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.85; }
@@ -51,7 +65,7 @@
 .aboutpage-timeline-item .aboutpage-timeline-place { margin-bottom: 13px; color: var(--muted); font-size: 12px; }
 .aboutpage-practice { position: relative; overflow: hidden; padding-block: 47px 54px; color: var(--ink); background: var(--page); border-block: 2px solid var(--line); }
 .aboutpage-practice-inner { position: relative; display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: 110px; }
-.aboutpage-practice-number { position: relative; z-index: 1; color: var(--line); font-family: var(--display, sans-serif); font-size: clamp(145px, 19vw, 265px); font-weight: 650; line-height: 1; letter-spacing: -.055em; }
+.aboutpage-practice-number { position: relative; z-index: 1; color: var(--line); font-family: var(--display, sans-serif); font-size: clamp(145px, 19vw, 265px); font-weight: 650; line-height: 1; letter-spacing: -.055em; overflow: visible; padding-bottom: .18em; }
 .aboutpage-practice-number > span { color: var(--accent); }
 .aboutpage-practice-copy { position: relative; z-index: 1; }
 .aboutpage-practice .aboutpage-section-label { color: var(--muted); }
@@ -73,7 +87,7 @@
 .aboutpage-skill-group summary::-webkit-details-marker { display: none; }
 .aboutpage-skill-group summary > span:first-child { font-family: var(--display, sans-serif); font-size: 31px; font-weight: 550; line-height: 1.1; letter-spacing: -.02em; }
 .aboutpage-skill-count { margin-left: auto; color: var(--muted); font-size: 10px; white-space: nowrap; }
-.aboutpage-skill-group summary > svg { flex-shrink: 0; color: var(--accent); transition: transform 180ms; }
+.aboutpage-skill-group summary > svg { flex-shrink: 0; color: var(--accent); transition: transform 180ms ease; }
 .aboutpage-skill-group[open] summary > svg { transform: rotate(45deg); }
 .aboutpage-skill-group[open] summary > span:first-child { color: var(--accent); }
 .aboutpage-skill-group ul { display: flex; flex-wrap: wrap; gap: 9px; margin: 0; padding: 0 0 27px; list-style: none; }
@@ -87,7 +101,7 @@
 .aboutpage-next-links svg { flex-shrink: 0; color: var(--accent); }
 .aboutpage-contact { padding-block: 34px 46px; background: var(--surface); border-top: 2px solid var(--line); }
 .aboutpage-contact p { margin: 0 0 25px; color: var(--muted); font-size: 12px; }
-.aboutpage-contact a { display: flex; align-items: center; justify-content: space-between; gap: 25px; width: 100%; color: var(--ink); font-family: var(--display, sans-serif); font-size: clamp(69px, 9vw, 128px); font-weight: 600; line-height: 1; letter-spacing: -.03em; text-decoration: none; }
+.aboutpage-contact a { display: flex; align-items: center; justify-content: space-between; gap: 25px; width: 100%; color: var(--ink); font-family: var(--display, sans-serif); font-size: clamp(69px, 9vw, 128px); font-weight: 600; line-height: 1; letter-spacing: -.03em; text-decoration: none; overflow: visible; padding-bottom: .18em; }
 .aboutpage-contact a:hover { color: var(--accent); }
 .aboutpage-contact a > svg { color: var(--accent); }
 @media (max-width: 1100px) {
@@ -116,6 +130,8 @@
   .aboutpage-story h2 { font-size: 46px; }
   .aboutpage-story-copy .aboutpage-lead { font-size: 18px; color: var(--ink); }
   .aboutpage-story-copy p { font-size: 12px; color: var(--muted); }
+  .aboutpage-learning-inner { gap: 55px; }
+  .aboutpage-learning { padding-block: 68px; }
   .aboutpage-journey { grid-template-columns: .7fr 1.3fr; gap: 35px; padding-block: 65px; }
   .aboutpage-journey-heading h2 { font-size: 55px; }
   .aboutpage-journey-heading p { font-size: 11px; }
@@ -163,6 +179,14 @@
   .aboutpage-story-copy { padding-top: 0; }
   .aboutpage-story-copy .aboutpage-lead { font-size: 19px; margin-bottom: 20px; color: var(--page); }
   .aboutpage-story-copy p { font-size: 12px; color: var(--line); }
+  .aboutpage-learning { padding-block: 55px; }
+  .aboutpage-learning-inner { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .aboutpage-learning-heading h2 { margin-block: 22px 17px; font-size: 57px; }
+  .aboutpage-learning-heading > p { max-width: 360px; font-size: 12px; }
+  .aboutpage-learning-heading time { margin-top: 17px; font-size: 8px; }
+  .aboutpage-learning-item { grid-template-columns: 27px minmax(0, 1fr); gap: 12px; padding-block: 20px; }
+  .aboutpage-learning-item h3 { font-size: 26px; }
+  .aboutpage-learning-item p { font-size: 11px; }
   .aboutpage-journey { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-block: 55px; }
   .aboutpage-journey-heading h2 { margin-block: 22px 17px; font-size: 59px; }
   .aboutpage-journey-heading p { max-width: 290px; font-size: 12px; }
@@ -173,7 +197,7 @@
   .aboutpage-timeline-top { gap: 9px 15px; }
   .aboutpage-timeline-item h3 { margin-top: 12px; font-size: 17px; }
   .aboutpage-timeline-item .aboutpage-timeline-place { font-size: 11px; }
-  .aboutpage-practice { padding-block: 25px 41px; color: var(--accent-ink); }
+  .aboutpage-practice { padding-block: 25px 41px; color: var(--ink); }
   .aboutpage-practice-inner { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .aboutpage-practice-number { font-size: 167px; }
   .aboutpage-practice h2 { margin-block: 17px; font-size: clamp(40px, 10vw, 54px); }
@@ -211,6 +235,3 @@
 @media (prefers-reduced-motion: reduce) {
   .aboutpage-skill-group summary > svg { transition: none; }
 }
-.aboutpage-practice .aboutpage-practice-number, .aboutpage-practice .aboutpage-practice-number > span, .aboutpage-practice .aboutpage-section-label, .aboutpage-practice p, .aboutpage-practice a { color: var(--accent-ink); }
-.aboutpage-practice a, .aboutpage-practice a:hover { border-color: var(--accent-ink); }
-.aboutpage-practice a:focus-visible { outline-color: var(--accent-ink); }

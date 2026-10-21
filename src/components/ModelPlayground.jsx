@@ -1,6 +1,10 @@
-import { useId, useState } from 'react'
-import { ArrowRight, Plus, RotateCcw } from 'lucide-react'
+import { lazy, Suspense, useCallback, useEffect, useId, useState } from 'react'
+import { ArrowRight, Box, ChartNoAxesColumnIncreasing, Plus, RotateCcw } from 'lucide-react'
 import './ModelPlayground.css'
+
+const ProbabilitySurface3D = import.meta.env.SSR
+  ? null
+  : lazy(() => import('./ProbabilitySurface3D'))
 
 const presets = {
   linear: [
@@ -41,9 +45,28 @@ export default function ModelPlayground() {
   const [model,setModel] = useState(initialModel)
   const [learningRate,setLearningRate] = useState(.7)
   const [showBoundary,setShowBoundary] = useState(true)
+  const [view,setView] = useState('2d')
+  const [webglAvailable,setWebglAvailable] = useState(false)
   const [point,setPoint] = useState({ x: '0.3', y: '-0.2', label: '1' })
   const [sampleMessage,setSampleMessage] = useState('')
   const id = useId().replaceAll(':','')
+  const returnToMap = useCallback(() => setView('2d'), [])
+
+  useEffect(() => {
+    try {
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('webgl')
+      setWebglAvailable(Boolean(context))
+      context?.getExtension('WEBGL_lose_context')?.loseContext()
+      const smallScreen = window.matchMedia('(max-width: 700px)')
+      const chooseAccessibleView = () => { if (smallScreen.matches) setView('2d') }
+      smallScreen.addEventListener('change', chooseAccessibleView)
+      chooseAccessibleView()
+      return () => smallScreen.removeEventListener('change', chooseAccessibleView)
+    } catch {
+      setWebglAvailable(false)
+    }
+  }, [])
 
   function choosePreset(key) {
     setPreset(key)
@@ -79,7 +102,8 @@ export default function ModelPlayground() {
   for (let row=0; row<20; row++) {
     for (let col=0; col<26; col++) {
       const p = probability(model,-1+(col+.5)*2/26,1-(row+.5)*2/20)
-      cells.push(<rect key={`${row}-${col}`} x={35+col*330/26} y={35+row*12.5} width={330/26+.2} height="12.7" fill={`rgba(241,122,90,${.035+p*.55})`} />)
+      const alpha = (.035 + p * .55).toFixed(3)
+      cells.push(<rect key={`${row}-${col}`} x={35+col*330/26} y={35+row*12.5} width={330/26+.2} height="12.7" fill={`rgba(0,207,232,${alpha})`} />)
     }
   }
 
@@ -99,7 +123,12 @@ export default function ModelPlayground() {
         </div>
         <div className="experiment-console">
           <div className="experiment-console-top"><span>Logistic regression</span><span>Toy dataset / {samples.length} samples</span></div>
-          <svg className="experiment-plot" viewBox="0 0 400 320" role="img" aria-label={`Classifier probability map after ${model.step} training steps. Cross-entropy loss ${loss.toFixed(3)}.`}><defs><clipPath id={id}><rect x="35" y="35" width="330" height="250" /></clipPath></defs><g clipPath={`url(#${id})`}>{cells}<path d="M35 97.5H365M35 160H365M35 222.5H365M117.5 35V285M200 35V285M282.5 35V285" className="experiment-grid-lines" />{showBoundary && <path d={`M${px(-1)} ${py(lineY(-1))}L${px(1)} ${py(lineY(1))}`} className="experiment-boundary" />}{samples.map(([x,y,label],index) => <circle key={index} cx={px(x)} cy={py(y)} r="5.5" className={label ? 'sample-one' : 'sample-zero'} />)}</g><path d="M35 35V285H365" className="experiment-axes" /><text x="200" y="309">Feature x₁</text><text transform="translate(15,175) rotate(-90)">Feature x₂</text></svg>
+          {webglAvailable && <div className="experiment-view-switch" role="group" aria-label="Choose classifier visualization"><button type="button" aria-pressed={view === '2d'} onClick={() => setView('2d')}><ChartNoAxesColumnIncreasing size={15} aria-hidden="true" />2D map</button><button type="button" aria-pressed={view === '3d'} onClick={() => setView('3d')}><Box size={15} aria-hidden="true" />3D surface</button></div>}
+          <div className="experiment-visualization">
+            {view === '3d' && webglAvailable && ProbabilitySurface3D
+              ? <Suspense fallback={<div className="experiment-surface-fallback">Preparing the probability surfaceâ€¦</div>}><ProbabilitySurface3D samples={samples} model={model} probability={probability} onFallback={returnToMap} /></Suspense>
+              : <svg className="experiment-plot" viewBox="0 0 400 320" role="img" aria-label={`Classifier probability map after ${model.step} training steps. Cross-entropy loss ${loss.toFixed(3)}.`}><defs><clipPath id={id}><rect x="35" y="35" width="330" height="250" /></clipPath></defs><g clipPath={`url(#${id})`}>{cells}<path d="M35 97.5H365M35 160H365M35 222.5H365M117.5 35V285M200 35V285M282.5 35V285" className="experiment-grid-lines" />{showBoundary && <path d={`M${px(-1)} ${py(lineY(-1))}L${px(1)} ${py(lineY(1))}`} className="experiment-boundary" />}{samples.map(([x,y,label],index) => <circle key={index} cx={px(x)} cy={py(y)} r="5.5" className={label ? 'sample-one' : 'sample-zero'} />)}</g><path d="M35 35V285H365" className="experiment-axes" /><text x="200" y="309">Feature x₁</text><text transform="translate(15,175) rotate(-90)">Feature x₂</text></svg>}
+          </div>
           <div className="experiment-readout" aria-live="polite"><span>Training step<strong>{String(model.step).padStart(3,'0')}</strong></span><span>Cross-entropy loss<strong>{loss.toFixed(3)}</strong></span><span className="experiment-legend"><i />Class A <i />Class B</span></div>
           <div className="experiment-parameters"><span>w₁ <b>{model.weights[0].toFixed(2)}</b></span><span>w₂ <b>{model.weights[1].toFixed(2)}</b></span><span>bias <b>{model.bias.toFixed(2)}</b></span></div>
           <p className="experiment-disclosure">A real logistic-regression toy running in your browser. No external model calls.</p>

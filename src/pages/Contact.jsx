@@ -1,8 +1,10 @@
+import { Link } from "@tanstack/react-router"
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, ArrowUpRight, Check, Code2, Copy, Mail, MapPin, MessageSquare, Plus } from 'lucide-react'
 import { Github, Linkedin } from '../components/BrandIcons'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
+import { usePageMotion } from '../hooks/usePageMotion'
 import { portfolio } from '../data/mockData'
 import './ContactPage.css'
 
@@ -49,6 +51,7 @@ function ConversationSignal() {
 }
 
 function Contact() {
+  usePageMotion()
   const [selectedStarter, setSelectedStarter] = useState('project')
   const [copyState, setCopyState] = useState('idle')
   const copyTimer = useRef(null)
@@ -101,11 +104,11 @@ function Contact() {
       : ''
 
   return (
-    <div className="contactpage" id="top">
+    <div className="contactpage" id="top" data-page-motion>
       <a className="skip-link" href="#contactpage-main">Skip to content</a>
       <SiteHeader />
       <main id="contactpage-main" tabIndex={-1}>
-        <section className="contactpage-hero container" aria-labelledby="contactpage-title">
+        <section className="contactpage-hero container" data-hero aria-labelledby="contactpage-title">
           <div className="contactpage-topline"><span>Contact / Start a conversation</span><span><MapPin size={13} aria-hidden="true" />{portfolio.location}</span></div>
           <div className="contactpage-hero-grid">
             <div className="contactpage-hero-copy">
@@ -123,7 +126,7 @@ function Contact() {
           <a className="contactpage-starter-jump" href="#conversation"><span>Find a starting point</span><ArrowRight size={17} aria-hidden="true" /></a>
         </section>
 
-        <section className="contactpage-conversation" id="conversation" aria-labelledby="contactpage-conversation-title">
+        <section className="contactpage-conversation" data-reveal id="conversation" aria-labelledby="contactpage-conversation-title">
           <div className="container contactpage-conversation-grid">
             <div className="contactpage-conversation-copy">
               <span className="contactpage-section-label">Every idea starts somewhere</span>
@@ -143,12 +146,12 @@ function Contact() {
           </div>
         </section>
 
-        <section className="contactpage-elsewhere container" aria-labelledby="contactpage-elsewhere-title">
+        <section className="contactpage-elsewhere container" data-reveal aria-labelledby="contactpage-elsewhere-title">
           <div className="contactpage-elsewhere-heading"><div><span className="contactpage-section-label">A few other places</span><h2 id="contactpage-elsewhere-title">Follow the work.</h2></div><p>Code, conversations, and the learning in between.</p></div>
           <div className="contactpage-social-grid">{socials.map(({ name, description, handle, href, Icon }, index) => <a className="contactpage-social" href={href} key={name} target="_blank" rel="noreferrer"><div className="contactpage-social-top"><Icon size={26} aria-hidden="true" /><span>0{index + 1}</span><ArrowUpRight size={23} aria-hidden="true" /></div><h3>{name}</h3><p>{description}</p><span className="contactpage-social-handle">{handle}<span className="sr-only"> (opens in a new tab)</span></span></a>)}</div>
         </section>
 
-        <div className="contactpage-next container"><span>Want a little more context first?</span><a href="/projects">Explore my projects<ArrowRight size={18} aria-hidden="true" /></a></div>
+        <div className="contactpage-next container" data-reveal><span>Want a little more context first?</span><Link to="/projects">Explore my projects<ArrowRight size={18} aria-hidden="true" /></Link></div>
       </main>
       <SiteFooter />
     </div>

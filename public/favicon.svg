@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SS monogram">
-  <rect x="1" y="1" width="62" height="62" rx="0" fill="#101010" stroke="#ff6b35" stroke-width="2"/>
-  <path d="M28 15H15l-6 6v11l6 5h7v7H9v7h14l6-6V33l-6-5h-7v-6h12z" fill="#f2eee6"/>
-  <path d="M54 15H41l-6 6v11l6 5h7v7H35v7h14l6-6V33l-6-5h-7v-6h12z" fill="#ff6b35"/>
+  <rect x="1" y="1" width="62" height="62" rx="0" fill="#080B14" stroke="#B69CFF" stroke-width="2"/>
+  <path d="M28 15H15l-6 6v11l6 5h7v7H9v7h14l6-6V33l-6-5h-7v-6h12z" fill="#54F1E5"/>
+  <path d="M54 15H41l-6 6v11l6 5h7v7H35v7h14l6-6V33l-6-5h-7v-6h12z" fill="#B69CFF"/>
 </svg>

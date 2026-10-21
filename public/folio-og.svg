@@ -1,37 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">Santosh Singh — AI and ML Student</title>
   <desc id="desc">AI and ML student and developer. Building through experiments at DIT Dehradun, Class of 2027.</desc>
-  <rect width="1200" height="630" fill="#101010"/>
-  <text x="52" y="57" fill="#b0aca4" font-family="'DM Sans', Arial, sans-serif" font-size="13" letter-spacing=".5">Student in progress.</text>
+  <rect width="1200" height="630" fill="#080B14"/>
+  <path d="M0 525H1200M0 545H1200M0 565H1200M0 585H1200M0 605H1200M900 300V630M920 300V630M940 300V630M960 300V630M980 300V630M1000 300V630" stroke="#A6B6CC" stroke-opacity=".06"/>
+  <text x="52" y="57" fill="#A6B6CC" font-family="'DM Sans', Arial, sans-serif" font-size="13" letter-spacing=".5">Student in progress.</text>
   <g transform="translate(1097 27)">
-    <rect width="51" height="43" rx="0" fill="#ff6b35"/>
-    <path d="M22 8H12l-4 4v9l4 4h6v6H8v6h11l5-5V22l-5-4h-5v-4h8zM43 8H33l-4 4v9l4 4h6v6H29v6h11l5-5V22l-5-4h-5v-4h8z" fill="#101010"/>
+    <rect width="51" height="43" rx="0" fill="#54F1E5"/>
+    <path d="M22 8H12l-4 4v9l4 4h6v6H8v6h11l5-5V22l-5-4h-5v-4h8zM43 8H33l-4 4v9l4 4h6v6H29v6h11l5-5V22l-5-4h-5v-4h8z" fill="#071118"/>
   </g>
-  <text x="48" y="244" fill="#f2eee6" font-family="'Big Shoulders Display', 'Arial Narrow', Arial, sans-serif" font-size="194" font-weight="800" letter-spacing="-3" textLength="1104" lengthAdjust="spacingAndGlyphs">SANTOSH SINGH</text>
-  <path d="M52 279h1096" stroke="#f2eee6" stroke-opacity=".2"/>
-  <rect x="52" y="278" width="144" height="3" fill="#ff6b35"/>
-  <text x="52" y="361" fill="#f2eee6" font-family="'Big Shoulders Display', 'Arial Narrow', Arial, sans-serif" font-size="71" font-weight="700" letter-spacing="-1">AI &amp; ML</text>
-  <text x="52" y="408" fill="#b0aca4" font-family="'DM Sans', Arial, sans-serif" font-size="24">Building through experiments</text>
+  <text x="48" y="244" fill="#EAF3FF" font-family="'Big Shoulders Display', 'Arial Narrow', Arial, sans-serif" font-size="194" font-weight="800" letter-spacing="-3" textLength="1104" lengthAdjust="spacingAndGlyphs">SANTOSH SINGH</text>
+  <path d="M52 279h1096" stroke="#A6B6CC" stroke-opacity=".24"/>
+  <rect x="52" y="278" width="144" height="3" fill="#54F1E5"/>
+  <text x="52" y="361" fill="#B69CFF" font-family="'Big Shoulders Display', 'Arial Narrow', Arial, sans-serif" font-size="71" font-weight="700" letter-spacing="-1">AI &amp; ML</text>
+  <text x="52" y="408" fill="#A6B6CC" font-family="'DM Sans', Arial, sans-serif" font-size="24">Building through experiments</text>
   <g transform="translate(52 455)">
-    <rect width="194" height="35" rx="0" fill="#ff6b35"/>
-    <text x="97" y="23" fill="#101010" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="600" text-anchor="middle">AI &amp; ML student + developer</text>
+    <rect width="194" height="35" rx="0" fill="#54F1E5"/>
+    <text x="97" y="23" fill="#071118" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="600" text-anchor="middle">AI &amp; ML student + developer</text>
   </g>
-  <g fill="none" stroke="#ff6b35" stroke-width="1.5" stroke-opacity=".65">
+  <g fill="none" stroke="#B69CFF" stroke-width="1.5" stroke-opacity=".62">
     <path d="M760 340L920 318M760 340L920 378M760 340L920 438M760 340L920 498"/>
     <path d="M760 410L920 318M760 410L920 378M760 410L920 438M760 410L920 498"/>
     <path d="M760 480L920 318M760 480L920 378M760 480L920 438M760 480L920 498"/>
     <path d="M920 318L1080 365M920 318L1080 455M920 378L1080 365M920 378L1080 455"/>
     <path d="M920 438L1080 365M920 438L1080 455M920 498L1080 365M920 498L1080 455"/>
   </g>
-  <g fill="#101010" stroke="#b0aca4" stroke-width="2">
+  <g fill="#121C2D" stroke="#A6B6CC" stroke-width="2">
     <circle cx="760" cy="340" r="7"/><circle cx="760" cy="410" r="7"/><circle cx="760" cy="480" r="7"/>
   </g>
-  <g fill="#ff6b35">
+  <g fill="#B69CFF">
     <circle cx="920" cy="318" r="8"/><circle cx="920" cy="378" r="8"/><circle cx="920" cy="438" r="8"/><circle cx="920" cy="498" r="8"/>
     <circle cx="1080" cy="365" r="12"/><circle cx="1080" cy="455" r="12"/>
   </g>
-  <g fill="#f2eee6"><circle cx="1080" cy="365" r="4"/><circle cx="1080" cy="455" r="4"/></g>
-  <path d="M52 555h1096" stroke="#f2eee6" stroke-opacity=".2"/>
-  <text x="52" y="592" fill="#b0aca4" font-family="'DM Sans', Arial, sans-serif" font-size="13">Artificial intelligence / Machine learning / Software</text>
-  <text x="1148" y="592" fill="#f2eee6" font-family="'DM Sans', Arial, sans-serif" font-size="13" text-anchor="end">DIT Dehradun / Class of 2027</text>
+  <g fill="#54F1E5"><circle cx="1080" cy="365" r="4"/><circle cx="1080" cy="455" r="4"/></g>
+  <path d="M52 555h1096" stroke="#A6B6CC" stroke-opacity=".24"/>
+  <text x="52" y="592" fill="#A6B6CC" font-family="'DM Sans', Arial, sans-serif" font-size="13">Artificial intelligence / Machine learning / Software</text>
+  <text x="1148" y="592" fill="#EAF3FF" font-family="'DM Sans', Arial, sans-serif" font-size="13" text-anchor="end">DIT Dehradun / Class of 2027</text>
 </svg>
