@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Pause, Play } from 'lucide-react'
 import { portfolio } from '../data/mockData'
 import './NeuralWorkbench.css'
 
@@ -35,10 +35,38 @@ function isActiveNode(node, selected) {
   return node.index === selected % 6 || node.index === (selected + 2) % 6
 }
 
-function traceCurve(context, a, b) {
-  const reach = (b.x - a.x) * 0.42
-  context.moveTo(a.x, a.y)
-  context.bezierCurveTo(a.x + reach, a.y, b.x - reach, b.y, b.x, b.y)
+function curveControls(a, b, index) {
+  const reach = (b.world.x - a.world.x) * 0.42
+  const bend = Math.sin(index * 1.71) * 0.14
+  const lift = Math.cos(index * 1.27) * 0.18
+  return [
+    a.world,
+    { x: a.world.x + reach, y: a.world.y + bend, z: a.world.z + lift },
+    { x: b.world.x - reach, y: b.world.y - bend, z: b.world.z + lift },
+    b.world,
+  ]
+}
+
+function cubicPoint(points, t) {
+  const u = 1 - t
+  const a = u * u * u
+  const b = 3 * u * u * t
+  const c = 3 * u * t * t
+  const d = t * t * t
+  return {
+    x: a * points[0].x + b * points[1].x + c * points[2].x + d * points[3].x,
+    y: a * points[0].y + b * points[1].y + c * points[2].y + d * points[3].y,
+    z: a * points[0].z + b * points[1].z + c * points[2].z + d * points[3].z,
+  }
+}
+
+function traceCurve(context, controls, projectPoint, steps = 14) {
+  const start = projectPoint(controls[0])
+  context.moveTo(start.x, start.y)
+  for (let step = 1; step <= steps; step++) {
+    const point = projectPoint(cubicPoint(controls, step / steps))
+    context.lineTo(point.x, point.y)
+  }
 }
 
 export default function NeuralWorkbench({ className = '' }) {
@@ -46,9 +74,20 @@ export default function NeuralWorkbench({ className = '' }) {
   const canvasRef = useRef(null)
   const stateRef = useRef({ selected: 0 })
   const redrawRef = useRef(null)
+  const syncAnimationRef = useRef(null)
+  const motionPlayingRef = useRef(true)
   const [selected, setSelected] = useState(0)
+  const [motionPlaying, setMotionPlaying] = useState(true)
+  const [reducedMotion, setReducedMotion] = useState(false)
   const mode = MODES[selected]
   const project = portfolio.projects.find((item) => item.tone === mode.tone)
+
+  const toggleMotion = () => {
+    const next = !motionPlayingRef.current
+    motionPlayingRef.current = next
+    setMotionPlaying(next)
+    syncAnimationRef.current?.()
+  }
 
   useEffect(() => {
     stateRef.current = { selected }
@@ -64,9 +103,14 @@ export default function NeuralWorkbench({ className = '' }) {
     let width = 900
     let height = 460
     let disposed = false
+    let visible = false
+    let frameId = 0
+    let lastFrame = 0
+    let animationTime = 0
     let hitTargets = []
     const pointer = { hover: null, drag: null }
     const rotation = { x: 0.19, y: -0.16 }
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     const projectPoint = (point) => {
       const x = point.x * Math.cos(rotation.y) + point.z * Math.sin(rotation.y)
@@ -117,14 +161,32 @@ export default function NeuralWorkbench({ className = '' }) {
         context.stroke()
       })
 
-      const projected = new Map(NODES.map((node) => [node.id, { ...projectPoint(node), node }]))
-      const orderedEdges = EDGES.map((edge) => ({ ...edge, a: projected.get(edge.from.id), b: projected.get(edge.to.id), active: isActiveNode(edge.from, selectedMode) && isActiveNode(edge.to, selectedMode) }))
+      const time = animationTime
+      const projected = new Map(NODES.map((node) => {
+        const phase = (node.layer + 1) * 1.31 + node.index * 1.73
+        const active = isActiveNode(node, selectedMode)
+        const world = {
+          x: node.x + Math.sin(time * 0.72 + phase) * 0.05,
+          y: node.y + Math.sin(time * 0.92 + phase * 1.1) * 0.11,
+          z: node.z + Math.sin(time * 0.64 + phase * 1.3) * 0.27 + (active ? Math.sin(time * 1.8 + phase) * 0.07 : 0),
+        }
+        const activation = active ? 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(time * 3.2 - node.layer * 0.9 - node.index * 0.3)) : 0.12
+        return [node.id, { ...projectPoint(world), node, world, active, activation }]
+      }))
+      const orderedEdges = EDGES.map((edge, index) => ({
+        ...edge,
+        index,
+        a: projected.get(edge.from.id),
+        b: projected.get(edge.to.id),
+        active: projected.get(edge.from.id).active && projected.get(edge.to.id).active,
+      }))
         .sort((a, b) => Number(a.active) - Number(b.active) || (a.a.z + a.b.z) - (b.a.z + b.b.z))
 
-      orderedEdges.forEach((edge, index) => {
+      orderedEdges.forEach((edge) => {
         const { a, b, active } = edge
+        const controls = curveControls(a, b, edge.index)
         context.beginPath()
-        traceCurve(context, a, b)
+        traceCurve(context, controls, projectPoint)
         context.lineWidth = active ? 1.3 : 0.65
         if (active) {
           const gradient = context.createLinearGradient(a.x, a.y, b.x, b.y)
@@ -137,18 +199,43 @@ export default function NeuralWorkbench({ className = '' }) {
         } else context.strokeStyle = 'rgba(168, 183, 208, 0.28)'
         context.stroke()
         context.shadowBlur = 0
+
+        if (active) {
+          const period = 2.4
+          const duration = 1.3
+          const offset = edge.from.layer * 0.34 + (edge.index % 5) * 0.11
+          const age = ((time - offset) % period + period) % period
+          if (age < duration) {
+            const progress = age / duration
+            const pulse = projectPoint(cubicPoint(controls, progress))
+            const pulseRadius = 1.25 + Math.sin(progress * Math.PI) * 1.2
+            context.save()
+            context.globalCompositeOperation = 'lighter'
+            context.shadowColor = '#54F1E5'
+            context.shadowBlur = 10
+            context.fillStyle = '#EAF3FF'
+            context.beginPath(); context.arc(pulse.x, pulse.y, pulseRadius * pulse.scale, 0, Math.PI * 2); context.fill()
+            context.restore()
+          }
+        }
       })
 
       hitTargets = []
       Array.from(projected.values()).sort((a, b) => a.z - b.z).forEach((point) => {
-        const active = isActiveNode(point.node, selectedMode)
+        const active = point.active
         const isEndpoint = point.node.layer === 0 || point.node.layer === 3
-        const radius = (isEndpoint ? 6.8 : 5.2) * point.scale
+        const radius = (isEndpoint ? 6.8 : 5.2) * point.scale * (active ? 1 + point.activation * 0.07 : 1)
         if (isEndpoint) hitTargets.push({ ...point, radius: Math.max(17, radius * 2) })
         if (active || pointer.hover === point.node.id) {
+          context.save()
+          context.globalAlpha = active ? 0.18 + point.activation * 0.12 : 0.14
+          context.fillStyle = '#54F1E5'
+          context.beginPath(); context.arc(point.x, point.y, radius * (active ? 2.8 : 1.9), 0, Math.PI * 2); context.fill()
+          context.globalAlpha = active ? 0.55 + point.activation * 0.35 : 1
           context.strokeStyle = '#54F1E5'
           context.lineWidth = 1
-          context.beginPath(); context.arc(point.x, point.y, radius * 1.9, 0, Math.PI * 2); context.stroke()
+          context.beginPath(); context.arc(point.x, point.y, radius * (active ? 1.8 + point.activation * 0.16 : 1.9), 0, Math.PI * 2); context.stroke()
+          context.restore()
         }
         const body = context.createRadialGradient(point.x - radius * 0.35, point.y - radius * 0.4, 0, point.x, point.y, radius)
         body.addColorStop(0, active ? '#EAF3FF' : '#A6B6CC')
@@ -178,9 +265,51 @@ export default function NeuralWorkbench({ className = '' }) {
       })
     }
 
-    const update = () => {
+    const canAnimate = () => !disposed && !motionPreference.matches && motionPlayingRef.current && visible && !document.hidden
+    const animate = (now) => {
+      if (!canAnimate()) {
+        frameId = 0
+        lastFrame = 0
+        return
+      }
+      const dt = lastFrame ? Math.min((now - lastFrame) / 1000, 1 / 30) : 1 / 60
+      lastFrame = now
+      animationTime += dt
       draw()
+      frameId = requestAnimationFrame(animate)
     }
+    const syncAnimation = () => {
+      if (canAnimate()) {
+        if (!frameId) {
+          lastFrame = 0
+          frameId = requestAnimationFrame(animate)
+        }
+      } else if (frameId) {
+        cancelAnimationFrame(frameId)
+        frameId = 0
+        lastFrame = 0
+        draw()
+      }
+    }
+    const onMotionPreference = () => {
+      setReducedMotion(motionPreference.matches)
+      syncAnimation()
+    }
+    const onVisibilityChange = () => syncAnimation()
+    motionPreference.addEventListener('change', onMotionPreference)
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    setReducedMotion(motionPreference.matches)
+    syncAnimationRef.current = syncAnimation
+    let visibilityObserver
+    if (typeof IntersectionObserver === 'undefined') visible = true
+    else {
+      visibilityObserver = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting
+        syncAnimation()
+      }, { rootMargin: '100px 0px' })
+      visibilityObserver.observe(stage)
+    }
+    const update = () => draw()
     redrawRef.current = update
     const resize = () => {
       const bounds = stage.getBoundingClientRect()
@@ -254,6 +383,11 @@ export default function NeuralWorkbench({ className = '' }) {
     return () => {
       disposed = true
       redrawRef.current = null
+      syncAnimationRef.current = null
+      if (frameId) cancelAnimationFrame(frameId)
+      visibilityObserver?.disconnect()
+      motionPreference.removeEventListener('change', onMotionPreference)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
       resizeObserver.disconnect()
       canvas.removeEventListener('pointermove', onMove)
       canvas.removeEventListener('pointerleave', onLeave)
@@ -277,7 +411,19 @@ export default function NeuralWorkbench({ className = '' }) {
       </div>
       <div className="nw-layout">
         <div className="nw-stage" ref={stageRef}>
-          <canvas className="nw-canvas" ref={canvasRef} role="img" aria-label="Interactive 3D neural network. Drag to rotate, select an input or output node, or use the arrow keys." aria-describedby="nw-stage-note" tabIndex={0} />
+          <canvas className="nw-canvas" ref={canvasRef} role="img" aria-label="Interactive 3D neural network with 22 moving neurons and 104 synapses. Signal pulses travel along the selected pathway. Drag to rotate or use the arrow keys." aria-describedby="nw-stage-note" tabIndex={0} />
+          <span className="nw-motion-status" aria-hidden="true"><i />3D SIGNAL FLOW <b>22 NEURONS / 104 SYNAPSES</b></span>
+          <button
+            className="nw-motion-toggle"
+            type="button"
+            onClick={toggleMotion}
+            disabled={reducedMotion}
+            aria-pressed={motionPlaying && !reducedMotion}
+            aria-label={reducedMotion ? 'Neuron motion disabled by reduced motion preference' : motionPlaying ? 'Pause neuron motion' : 'Resume neuron motion'}
+            title={reducedMotion ? 'Reduced motion is on' : motionPlaying ? 'Pause neuron motion' : 'Resume neuron motion'}
+          >
+            {motionPlaying && !reducedMotion ? <Pause size={14} aria-hidden="true" /> : <Play size={14} aria-hidden="true" />}
+          </button>
           <span className="nw-stage-note" id="nw-stage-note">Drag to rotate · Select a node · Arrow keys also work</span>
         </div>
         <aside className="nw-inspector" key={selected} aria-live="polite" aria-atomic="true">
