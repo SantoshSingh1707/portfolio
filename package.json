@@ -6,10 +6,13 @@
     "#/*": "./src/*"
   },
   "scripts": {
+    "predev": "node scripts/generate-neural-router.mjs",
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
+    "prebuild": "node scripts/generate-neural-router.mjs",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "audit:neural-router": "node scripts/audit-neural-router.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
