@@ -29,7 +29,23 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "playwright": "^1.65.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.0"
-  }
+  },
+  "version": "1.0.0",
+  "description": "Personal portfolio for Santosh Singh, a Computer Science and Engineering student at DIT University in Dehradun. It presents four project case studies, an interactive learning lab, his experience and toolkit, and verified contact links.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SantoshSingh1707/portfolio.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/SantoshSingh1707/portfolio/issues"
+  },
+  "homepage": "https://github.com/SantoshSingh1707/portfolio#readme"
 }

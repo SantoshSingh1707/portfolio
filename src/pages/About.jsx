@@ -60,7 +60,7 @@ function About() {
               <div className="aboutpage-class"><span>B.Tech / Computer Science & Engineering</span><strong>CLASS OF 2027</strong></div>
             </div>
             <figure className="aboutpage-portrait">
-              <div className="aboutpage-portrait-stage"><span className="aboutpage-portrait-year" aria-hidden="true">27</span><span className="aboutpage-portrait-orbit" aria-hidden="true" /><picture><source srcSet={portraitAvif} type="image/avif" /><source srcSet={portraitWebp} type="image/webp" /><img src={portrait} alt="Santosh Singh wearing his DIT hoodie" width="750" height="879" fetchPriority="high" decoding="async" /></picture><span className="aboutpage-portrait-plus" aria-hidden="true">+</span></div>
+              <div className="aboutpage-portrait-stage"><picture><source srcSet={portraitAvif} type="image/avif" /><source srcSet={portraitWebp} type="image/webp" /><img src={portrait} alt="Santosh Singh wearing his DIT hoodie" width="750" height="879" fetchPriority="high" decoding="async" /></picture></div>
               <figcaption><span>{portfolio.name}</span><span>Student in progress.</span></figcaption>
             </figure>
           </div>

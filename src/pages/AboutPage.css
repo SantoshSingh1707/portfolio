@@ -1,4 +1,4 @@
-.aboutpage { min-height: 100dvh; color: var(--ink); background: var(--page-mesh); }
+.aboutpage { min-height: 100dvh; color: var(--ink); background: var(--page); }
 .aboutpage main:focus { outline: none; }
 .aboutpage-hero { padding-top: 31px; padding-bottom: 88px; }
 .aboutpage-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 32px; color: var(--muted); font-size: 11px; }
@@ -9,21 +9,16 @@
 .aboutpage-intro h1 { margin: 0; font-family: var(--display, sans-serif); font-size: clamp(79px, 10.8vw, 154px); font-weight: 650; line-height: .91; letter-spacing: -.035em; }
 .aboutpage-hero-copy { max-width: 390px; margin: 28px 0 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
 .aboutpage-hero-links { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 28px; }
-.aboutpage-resume { display: inline-flex; align-items: center; justify-content: space-between; gap: 26px; min-height: 49px; padding: 13px 18px; border: 2px solid var(--line); border-radius: var(--radius-sm); color: var(--accent-ink); background: var(--accent); font-size: 12px; font-weight: 500; text-decoration: none; box-shadow: var(--shadow-neo); }
-.aboutpage-resume:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+.aboutpage-resume { display: inline-flex; align-items: center; justify-content: space-between; gap: 26px; min-height: 49px; padding: 13px 18px; border: 2px solid var(--line); border-radius: var(--radius-sm); color: var(--accent-ink); background: var(--accent); font-size: 12px; font-weight: 500; text-decoration: none;  }
+.aboutpage-resume:hover { background: var(--accent); border-color: var(--accent); }
 .aboutpage-toolkit-jump { display: inline-flex; align-items: center; gap: 10px; padding-block: 12px; color: var(--muted); font-size: 11px; text-decoration: none; }
 .aboutpage-toolkit-jump:hover { color: var(--ink); }
 .aboutpage-class { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; max-width: 390px; margin-top: 38px; padding-top: 22px; border-top: 2px solid var(--line); }
 .aboutpage-class > span { color: var(--muted); font-size: 10px; }
 .aboutpage-class > strong { font-family: var(--display, sans-serif); font-size: 25px; font-weight: 550; letter-spacing: .015em; }
 .aboutpage-portrait { width: 100%; max-width: 420px; margin: 0; padding-top: 20px; justify-self: end; }
-.aboutpage-portrait-stage { position: relative; aspect-ratio: .84; overflow: hidden; border: 2px solid var(--line); background: var(--surface); box-shadow: var(--shadow-neo); transform: rotate(3deg); }
-.aboutpage-portrait-stage::before { position: absolute; content: ''; width: 115%; aspect-ratio: 1; left: -7%; bottom: -30%; border-radius: 0; background: var(--accent); box-shadow: none; }
-.aboutpage-portrait-stage::after { position: absolute; z-index: 3; content: ''; inset: 70% 0 0; background: transparent; pointer-events: none; }
-.aboutpage-portrait-year { position: absolute; top: 22px; right: 18px; color: transparent; -webkit-text-stroke: 1px var(--line); font-family: var(--display, sans-serif); font-size: clamp(140px, 15vw, 220px); font-weight: 600; letter-spacing: -.03em; line-height: .9; overflow: visible; padding-bottom: .18em; }
-.aboutpage-portrait-orbit { position: absolute; width: 93%; height: 65%; left: 3%; top: 23%; border: 2px solid var(--line); border-radius: 0; transform: rotate(-28deg); }
-.aboutpage-portrait-stage img { position: absolute; z-index: 2; height: 94%; width: 100%; left: 0; bottom: -17px; object-fit: contain; object-position: bottom; filter: grayscale(1) contrast(1.05); }
-.aboutpage-portrait-plus { position: absolute; z-index: 4; left: 22px; bottom: 20px; color: var(--accent-ink); font-size: 37px; line-height: 1; font-weight: 300; }
+.aboutpage-portrait-stage { position: relative; aspect-ratio: .84; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
+.aboutpage-portrait-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .aboutpage-portrait figcaption { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 28px 4px 0; color: var(--muted); font-size: 10px; }
 .aboutpage-portrait figcaption > span:last-child { color: var(--muted); }
 .aboutpage-section-label { display: block; color: var(--muted); font-size: 11px; }
@@ -72,7 +67,7 @@
 .aboutpage-practice h2 { margin: 19px 0 20px; font-size: clamp(38px, 4.3vw, 60px); font-weight: 600; line-height: .98; letter-spacing: -.025em; }
 .aboutpage-practice p { max-width: 440px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.85; }
 .aboutpage-practice a { display: inline-flex; align-items: center; gap: 24px; margin-top: 23px; padding-bottom: 7px; border-bottom: 2px solid var(--accent); color: var(--accent); font-size: 12px; text-decoration: none; }
-.aboutpage-practice a:hover { border-color: var(--accent-dark); color: var(--accent-dark); }
+.aboutpage-practice a:hover { border-color: var(--accent); color: var(--accent); }
 .aboutpage-practice a:focus-visible { outline-color: var(--accent); }
 .aboutpage-practice-mark { position: absolute; width: 290px; height: 290px; right: -70px; top: -30px; color: var(--accent); opacity: .08; transform: rotate(-16deg); pointer-events: none; }
 .aboutpage-toolkit { display: grid; grid-template-columns: .85fr 1.15fr; gap: 100px; padding-block: 90px; }

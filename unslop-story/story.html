@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1440, minimum-scale=1">
+<meta name="unslop-steps" content="Spacing, Color and icons, Type and copy, Details">
+<meta name="unslop-frame" content="0 0 1150">
+<title>Santosh Singh — AI/ML Student</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; }
+  html, body { width: 1440px; min-height: 900px; background: var(--page); color: var(--ink); font-family: var(--display); }
+  :root {
+    --page: #0c0c0b; --surface: #141412; --surface-hover: #1c1c1a;
+    --ink: #e8e8e2; --secondary: #c4c4ba; --muted: #8a8a80;
+    --line: rgba(232, 232, 226, 0.07); --accent: #c9a256; --accent-ink: #140f07;
+    --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --display: ui-sans-serif, system-ui, sans-serif;
+    --mono: ui-monospace, monospace;
+  }
+  .container { width: calc(100% - 64px); max-width: 1280px; margin-inline: auto; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  header.site-header { position: sticky; top: 0; border-bottom: 1px solid var(--line); background: rgba(12,12,11,0.8); }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px; padding: 0 32px; }
+  .site-brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 500; font-size: 17px; text-decoration: none; letter-spacing: -0.01em; }
+  .brand-symbol { display: grid; place-items: center; width: 26px; height: 26px; border-radius: var(--radius-sm); background: var(--surface); border: 1px solid var(--line); color: var(--ink); font-weight: 600; font-size: 14px; letter-spacing: -0.02em; }
+  .desktop-nav { display: flex; gap: 0; margin-left: auto; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .desktop-nav a { position: relative; padding: 9px 14px; border-radius: var(--radius-sm); color: var(--muted); font-size: 12px; font-weight: 500; }
+  .desktop-nav a.is-active { color: var(--ink); background: var(--surface-hover); }
+  .header-resume { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--ink); font-size: 12px; font-weight: 500; }
+
+  /* ===== STEP 0: ORIGINAL SLOP (About hero) ===== */
+  .aboutpage-hero { padding-top: 31px; padding-bottom: 88px; }
+  .aboutpage-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 32px; color: var(--muted); font-size: 11px; }
+  .aboutpage-topline > span:last-child { display: inline-flex; align-items: center; gap: 7px; }
+  .aboutpage-hero-grid { display: grid; grid-template-columns: 1.3fr .85fr; align-items: center; gap: 75px; }
+  .aboutpage-kicker { display: flex; align-items: center; gap: 9px; margin: 0 0 25px; color: var(--muted); font-size: 11px; }
+  .aboutpage-kicker > span { width: 5px; height: 5px; border-radius: 0; background: var(--accent); }
+  .aboutpage-intro h1 { margin: 0; font-family: var(--display, sans-serif); font-size: clamp(79px, 10.8vw, 154px); font-weight: 650; line-height: .91; letter-spacing: -.035em; }
+  .aboutpage-hero-copy { max-width: 390px; margin: 28px 0 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
+  .aboutpage-hero-links { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 28px; }
+  .aboutpage-resume { display: inline-flex; align-items: center; justify-content: space-between; gap: 26px; min-height: 49px; padding: 13px 18px; border: 2px solid var(--line); border-radius: var(--radius-sm); color: var(--accent-ink); background: var(--accent); font-size: 12px; font-weight: 500; text-decoration: none; }
+  .aboutpage-toolkit-jump { display: inline-flex; align-items: center; gap: 10px; padding-block: 12px; color: var(--muted); font-size: 11px; text-decoration: none; }
+  .aboutpage-class { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; max-width: 390px; margin-top: 38px; padding-top: 22px; border-top: 2px solid var(--line); }
+  .aboutpage-class > span { color: var(--muted); font-size: 10px; }
+  .aboutpage-class > strong { font-family: var(--display, sans-serif); font-size: 25px; font-weight: 550; letter-spacing: .015em; }
+  .aboutpage-portrait { width: 100%; max-width: 420px; margin: 0; padding-top: 20px; justify-self: end; }
+  .aboutpage-portrait-stage { position: relative; aspect-ratio: .84; overflow: hidden; border: 2px solid var(--line); background: var(--surface); transform: rotate(3deg); }
+  .aboutpage-portrait-stage::before { position: absolute; content: ''; width: 115%; aspect-ratio: 1; left: -7%; bottom: -30%; border-radius: 0; background: var(--accent); }
+  .aboutpage-portrait-year { position: absolute; top: 22px; right: 18px; color: transparent; -webkit-text-stroke: 1px var(--line); font-family: var(--display, sans-serif); font-size: clamp(140px, 15vw, 220px); font-weight: 600; letter-spacing: -.03em; line-height: .9; overflow: visible; padding-bottom: .18em; }
+  .aboutpage-portrait-orbit { position: absolute; width: 93%; height: 65%; left: 3%; top: 23%; border: 2px solid var(--line); border-radius: 0; transform: rotate(-28deg); }
+  .aboutpage-portrait-stage img { position: absolute; z-index: 2; height: 94%; width: 100%; left: 0; bottom: -17px; object-fit: contain; object-position: bottom; filter: grayscale(1) contrast(1.05); }
+  .aboutpage-portrait-plus { position: absolute; z-index: 4; left: 22px; bottom: 20px; color: var(--accent-ink); font-size: 37px; line-height: 1; font-weight: 300; }
+  .aboutpage-portrait figcaption { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 28px 4px 0; color: var(--muted); font-size: 10px; }
+
+  /* ===== S1: SPACING ===== */
+  .s1 .aboutpage-hero { padding-top: 48px; padding-bottom: 80px; }
+  .s1 .aboutpage-topline { padding-bottom: 28px; gap: 16px; }
+  .s1 .aboutpage-hero-grid { gap: 64px; }
+  .s1 .aboutpage-kicker { margin: 0 0 24px; gap: 8px; }
+  .s1 .aboutpage-hero-links { margin-top: 24px; gap: 12px; }
+  .s1 .aboutpage-class { margin-top: 32px; padding-top: 20px; gap: 8px; }
+  .s1 .aboutpage-portrait { padding-top: 0; }
+
+  /* ===== S2: COLOR AND ICONS ===== */
+  .s2 .aboutpage-topline, .s2 .aboutpage-kicker { color: var(--muted); }
+  .s2 .aboutpage-kicker > span { background: var(--muted); }
+  .s2 .aboutpage-resume { background: var(--surface); color: var(--ink); border-color: var(--line); }
+  .s2 .aboutpage-portrait-stage::before { opacity: 0; background: var(--accent); }
+  .s2 .aboutpage-portrait-plus { color: var(--ink); }
+
+  /* ===== S3: TYPE AND COPY ===== */
+  .s3 .aboutpage-intro h1 { font-weight: 500; letter-spacing: -0.02em; font-size: clamp(56px, 6vw, 80px); }
+  .s3 .aboutpage-hero-copy { color: var(--secondary); font-size: 14px; line-height: 1.7; }
+  .s3 .aboutpage-class > strong { font-weight: 500; letter-spacing: 0; font-size: 22px; }
+  .s3 .aboutpage-class > span { font-size: 10px; letter-spacing: 0.01em; }
+  .s3 .aboutpage-resume { font-size: 13px; padding: 0 20px; min-height: 44px; }
+
+  /* ===== S4: DETAILS ===== */
+  .s4 .aboutpage-portrait-stage { transform: none; border-width: 1px; border-radius: var(--radius-md); }
+  .s4 .aboutpage-portrait-stage img { filter: none; bottom: 0; height: 100%; }
+  .s4 .aboutpage-portrait-stage::before { opacity: 0; }
+  .s4 [data-out="4"] { opacity: 0; max-height: 0 !important; max-width: 0 !important; margin: 0 !important; padding: 0 !important; border-width: 0 !important; }
+  .s4 .aboutpage-portrait figcaption { padding: 14px 16px; }
+  .s4 .aboutpage-class { border-top-width: 1px; }
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-brand" href="/"><span class="brand-symbol" aria-hidden="true">SS</span><span>Santosh Singh<span style="display:block;margin-top:3px;font-family:var(--mono);color:var(--muted);font-size:10px;font-weight:400">Student in progress.</span></span></a>
+      <nav class="desktop-nav" aria-label="Main navigation"><a class="is-active" aria-current="page" href="/">Home</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+      <a class="header-resume" href="/resume.pdf" target="_blank" rel="noreferrer">My résumé <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+    </div>
+  </header>
+
+  <section class="aboutpage-hero container" data-hero data-gap="hero">
+    <div class="aboutpage-topline" data-gap="hero"><span>About / Santosh Singh</span><span style="display:inline-flex;align-items:center;gap:7px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v16"></path><polyline points="7 11 12 16 19 11"></polyline></svg>Dehradun, India</span></div>
+    <div class="aboutpage-hero-grid" data-gap="hero">
+      <div class="aboutpage-intro" data-gap="intro">
+        <p class="aboutpage-kicker" data-gap="intro"><span aria-hidden="true" style="width:5px;height:5px;border-radius:0;background:var(--accent);display:inline-block"></span>The person behind the projects</p>
+        <h1 id="aboutpage-title" data-gap="intro">The human<br class="home-mobile-title-break" style="display:none"/>in the loop.</h1>
+        <p class="aboutpage-hero-copy" data-gap="intro">An AI/ML student, a software builder, and someone who learns best by making things.</p>
+        <div class="aboutpage-hero-links" data-gap="intro">
+          <a class="aboutpage-resume" href="/resume.pdf" target="_blank" rel="noreferrer">Read my r&eacute;sum&eacute;<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L6 2l-5 5 5 5 7-7"></path></svg></a>
+          <a class="aboutpage-toolkit-jump" href="#toolkit">Explore my toolkit<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></a>
+        </div>
+        <div class="aboutpage-class" data-gap="intro"><span>B.Tech / Computer Science &amp; Engineering</span><strong>CLASS OF 2027</strong></div>
+      </div>
+      <figure class="aboutpage-portrait" data-gap="hero">
+        <div class="aboutpage-portrait-stage" data-radius="portrait" data-slop="Rotated frame">
+          <span class="aboutpage-portrait-year" data-out="4">27</span>
+          <span class="aboutpage-portrait-orbit" data-out="4" aria-hidden="true"></span>
+          <img src="me.png" alt="Santosh Singh wearing his DIT hoodie" width="750" height="879" />
+          <span class="aboutpage-portrait-plus" data-out="4" aria-hidden="true">+</span>
+        </div>
+        <figcaption><span>Santosh Singh</span><span>Student in progress.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+</body>
+</html>

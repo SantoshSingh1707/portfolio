@@ -189,16 +189,11 @@ export default function NeuralWorkbench({ className = '' }) {
         traceCurve(context, controls, projectPoint)
         context.lineWidth = active ? 1.3 : 0.65
         if (active) {
-          const gradient = context.createLinearGradient(a.x, a.y, b.x, b.y)
-          gradient.addColorStop(0, 'rgba(100, 77, 235, 0.95)')
-          gradient.addColorStop(0.6, 'rgba(0, 207, 232, 0.9)')
-          gradient.addColorStop(1, 'rgba(243, 246, 255, 0.95)')
-          context.strokeStyle = gradient
-          context.shadowColor = '#B69CFF'
-          context.shadowBlur = 4
+          context.strokeStyle = '#c9a256'
+          context.globalAlpha = 0.9
         } else context.strokeStyle = 'rgba(168, 183, 208, 0.28)'
         context.stroke()
-        context.shadowBlur = 0
+        context.globalAlpha = 1
 
         if (active) {
           const period = 2.4
@@ -208,12 +203,10 @@ export default function NeuralWorkbench({ className = '' }) {
           if (age < duration) {
             const progress = age / duration
             const pulse = projectPoint(cubicPoint(controls, progress))
-            const pulseRadius = 1.25 + Math.sin(progress * Math.PI) * 1.2
+            const pulseRadius = 1 + Math.sin(progress * Math.PI) * 0.6
             context.save()
-            context.globalCompositeOperation = 'lighter'
-            context.shadowColor = '#54F1E5'
-            context.shadowBlur = 10
-            context.fillStyle = '#EAF3FF'
+            context.globalAlpha = 0.5 + 0.5 * Math.sin(progress * Math.PI)
+            context.fillStyle = '#c9a256'
             context.beginPath(); context.arc(pulse.x, pulse.y, pulseRadius * pulse.scale, 0, Math.PI * 2); context.fill()
             context.restore()
           }
@@ -228,23 +221,23 @@ export default function NeuralWorkbench({ className = '' }) {
         if (isEndpoint) hitTargets.push({ ...point, radius: Math.max(17, radius * 2) })
         if (active || pointer.hover === point.node.id) {
           context.save()
-          context.globalAlpha = active ? 0.18 + point.activation * 0.12 : 0.14
-          context.fillStyle = '#54F1E5'
-          context.beginPath(); context.arc(point.x, point.y, radius * (active ? 2.8 : 1.9), 0, Math.PI * 2); context.fill()
-          context.globalAlpha = active ? 0.55 + point.activation * 0.35 : 1
-          context.strokeStyle = '#54F1E5'
+          context.globalAlpha = active ? 0.22 + point.activation * 0.1 : 0.14
+          context.fillStyle = active ? '#c9a256' : 'rgba(168, 183, 208, 0.14)'
+          context.beginPath(); context.arc(point.x, point.y, radius * (active ? 2.2 : 1.6), 0, Math.PI * 2); context.fill()
+          context.globalAlpha = active ? 0.9 : 1
+          context.strokeStyle = active ? '#c9a256' : 'rgba(168, 183, 208, 0.6)'
           context.lineWidth = 1
-          context.beginPath(); context.arc(point.x, point.y, radius * (active ? 1.8 + point.activation * 0.16 : 1.9), 0, Math.PI * 2); context.stroke()
+          context.beginPath(); context.arc(point.x, point.y, radius * (active ? 1.5 : 1.2), 0, Math.PI * 2); context.stroke()
           context.restore()
         }
         const body = context.createRadialGradient(point.x - radius * 0.35, point.y - radius * 0.4, 0, point.x, point.y, radius)
-        body.addColorStop(0, active ? '#EAF3FF' : '#A6B6CC')
-        body.addColorStop(0.25, active ? '#54F1E5' : '#50617B')
-        body.addColorStop(0.65, active ? '#B69CFF' : '#50617B')
+        body.addColorStop(0, active ? '#e8e8e2' : 'rgba(168, 183, 208, 0.35)')
+        body.addColorStop(0.25, active ? '#c9a256' : 'rgba(128, 138, 160, 0.5)')
+        body.addColorStop(0.65, active ? 'rgba(201, 162, 86, 0.3)' : 'rgba(128, 138, 160, 0.25)')
         body.addColorStop(1, active ? '#121C2D' : '#121C2D')
         context.fillStyle = body
         context.beginPath(); context.arc(point.x, point.y, radius, 0, Math.PI * 2); context.fill()
-        context.strokeStyle = active ? 'rgba(243, 246, 255, 0.95)' : 'rgba(168, 183, 208, 0.78)'
+        context.strokeStyle = active ? 'rgba(201, 162, 86, 0.9)' : 'rgba(168, 183, 208, 0.78)'
         context.lineWidth = 0.8; context.stroke()
         if (isEndpoint && width > 480) {
           const isInput = point.node.layer === 0

@@ -35,7 +35,6 @@
   background:
     radial-gradient(ellipse at 52% 42%, rgb(34 61 84 / 28%), transparent 63%),
     linear-gradient(145deg, #0e1623, #080d16 72%);
-  box-shadow: var(--shadow-neo);
 }
 
 .study-workflow-figure .iso-plate-corners { inset: 17px 18px; }
