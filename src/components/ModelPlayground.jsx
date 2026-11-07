@@ -103,7 +103,7 @@ export default function ModelPlayground() {
     for (let col=0; col<26; col++) {
       const p = probability(model,-1+(col+.5)*2/26,1-(row+.5)*2/20)
       const alpha = (.035 + p * .55).toFixed(3)
-      cells.push(<rect key={`${row}-${col}`} x={35+col*330/26} y={35+row*12.5} width={330/26+.2} height="12.7" fill={`rgba(0,207,232,${alpha})`} />)
+      cells.push(<rect key={`${row}-${col}`} x={35+col*330/26} y={35+row*12.5} width={330/26+.2} height="12.7" fill="var(--accent)" fillOpacity={alpha} />)
     }
   }
 

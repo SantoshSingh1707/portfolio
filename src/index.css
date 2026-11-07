@@ -16,6 +16,11 @@
   --radius-md: 10px;
   --radius-lg: 14px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dropdown-open-dur: 250ms;
+  --dropdown-close-dur: 150ms;
+  --dropdown-pre-scale: 0.97;
+  --dropdown-closing-scale: 0.99;
+  --dropdown-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --display: 'DM Sans', sans-serif;
   --mono: 'Space Mono', ui-monospace, monospace;
   font-synthesis: none;
@@ -70,6 +75,37 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .header-resume:hover { background: var(--surface-hover); border-color: var(--ink); }
 .menu-toggle { display: none; padding: 10px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); }
 .mobile-nav, .mobile-nav[hidden] { display: none; }
+.t-dropdown {
+  transform-origin: top left;
+  transform: scale(var(--dropdown-pre-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--dropdown-open-dur) var(--dropdown-ease),
+    opacity   var(--dropdown-open-dur) var(--dropdown-ease);
+  will-change: transform, opacity;
+}
+.t-dropdown[data-origin="top-right"]     { transform-origin: top right; }
+.t-dropdown[data-origin="top-center"]    { transform-origin: top center; }
+.t-dropdown[data-origin="bottom-left"]   { transform-origin: bottom left; }
+.t-dropdown[data-origin="bottom-center"] { transform-origin: bottom center; }
+.t-dropdown[data-origin="bottom-right"]  { transform-origin: bottom right; }
+.t-dropdown.is-open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+.t-dropdown.is-closing {
+  transform: scale(var(--dropdown-closing-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--dropdown-close-dur) var(--dropdown-ease),
+    opacity   var(--dropdown-close-dur) var(--dropdown-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-dropdown { transition: none !important; }
+}
 .site-footer { margin-top: 0; padding: 56px 0 0; border-top: 1px solid var(--line); color: var(--ink); background: var(--surface); }
 .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding-bottom: 48px; border-bottom: 1px solid var(--line); }
 .footer-kicker { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; color: var(--muted); font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.02em; }

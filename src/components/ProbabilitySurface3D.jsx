@@ -55,16 +55,16 @@ void main() {
     float radius = length(point);
     if (radius > 0.5) discard;
     if (vSelected > 0.5) {
-      gl_FragColor = radius > 0.3 ? vec4(0.71, 0.61, 1.0, 1.0) : vec4(0.92, 0.97, 1.0, 1.0);
+      gl_FragColor = radius > 0.3 ? vec4(0.79, 0.64, 0.34, 1.0) : vec4(0.91, 0.91, 0.89, 1.0);
       return;
     }
-    vec3 sampleColor = vLabel > 0.5 ? vec3(0.33, 0.95, 0.90) : vec3(0.71, 0.61, 1.0);
+    vec3 sampleColor = vLabel > 0.5 ? vec3(0.79, 0.64, 0.34) : vec3(0.91, 0.91, 0.89);
     gl_FragColor = vec4(sampleColor, 1.0);
   } else if (vLineMode > 0.5) {
-    gl_FragColor = vBoundaryMode > 0.5 ? vec4(0.33, 0.95, 0.90, 0.95) : vec4(0.65, 0.72, 0.82, 0.24);
+    gl_FragColor = vBoundaryMode > 0.5 ? vec4(0.79, 0.64, 0.34, 0.95) : vec4(0.55, 0.55, 0.52, 0.24);
   } else {
-    vec3 classA = vec3(0.71, 0.61, 1.0);
-    vec3 classB = vec3(0.33, 0.95, 0.90);
+    vec3 classA = vec3(0.91, 0.91, 0.89);
+    vec3 classB = vec3(0.79, 0.64, 0.34);
     vec3 color = mix(classA, classB, vProbability);
     float heightLight = 0.78 + (vProbability * 0.22);
     gl_FragColor = vec4(color * heightLight, 1.0);

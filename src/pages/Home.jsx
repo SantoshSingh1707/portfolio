@@ -13,10 +13,10 @@ import './Home.css'
 const subjects = ['AI', 'Machine learning', 'Computer vision', 'Data science', 'Systems']
 
 const fieldNotes = [
-  { title: 'Grounded beats clever.', body: 'Retrieval tied to a learner’s own documents is what makes a study tool worth trusting.' },
-  { title: 'Private by default.', body: 'Local inference keeps source code on the machine it came from.' },
-  { title: 'Reproducible or it didn’t happen.', body: 'A pipeline is only useful if the next run can match this one.' },
-  { title: 'Ask what the model sees.', body: 'A label is easier to trust when the signals behind it are visible.' },
+  { title: 'Grounded beats clever', body: 'Retrieval tied to a learner’s own documents is what makes a study tool worth trusting.' },
+  { title: 'Private by default', body: 'Local inference keeps source code on the machine it came from.' },
+  { title: 'Reproducible work', body: 'A pipeline is only useful if the next run can match this one.' },
+  { title: 'Ask what the model sees', body: 'A label is easier to trust when the signals behind it are visible.' },
 ]
 
 export default function Home() {
@@ -30,15 +30,14 @@ export default function Home() {
         <section className="home-introduction container" data-hero aria-labelledby="home-title">
           <div className="home-intro-heading">
             <p className="home-status"><span aria-hidden="true" />Santosh Singh · AI/ML student</p>
-            <h1 id="home-title">Human curiosity.<br />Machine<br className="home-mobile-title-break" />learning.</h1>
+            <h1 id="home-title">Machine learning,<br />learned by building</h1>
           </div>
           <div className="home-intro-copy">
-            <p>I’m learning how machines learn—and building things along the way.</p>
+            <p>My projects range from AI study tools to local code review, model pipelines and computer vision.</p>
             <span>Computer Science at DIT, Dehradun · Class of 2027</span>
             <div className="home-intro-actions">
               <Link className="home-intro-projects button button-primary" to="/projects">View selected projects<ArrowRight size={15} aria-hidden="true" /></Link>
               <Link className="home-intro-about text-link" to="/about">The person behind the projects<ArrowUpRight size={15} aria-hidden="true" /></Link>
-              <a className="home-intro-resume text-link" href={portfolio.resume} target="_blank" rel="noreferrer">My résumé<ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
             </div>
           </div>
           <figure className="home-portrait">
@@ -52,7 +51,7 @@ export default function Home() {
         <section className="home-profile container" aria-labelledby="home-profile-title">
           <div className="home-profile-heading">
             <span className="home-section-label">A quick introduction</span>
-            <h2 id="home-profile-title">A few things about my work.</h2>
+            <h2 id="home-profile-title">A few things about my work</h2>
           </div>
           <dl className="home-profile-facts">
             <div><dt>Study</dt><dd>B.Tech, Computer Science and Engineering<span>DIT · Class of 2027</span></dd></div>
@@ -76,7 +75,7 @@ export default function Home() {
         <section className="home-feature container" data-reveal aria-labelledby="home-feature-title">
           <div className="home-feature-copy">
             <span className="home-section-label">Inside the work</span>
-            <h2 id="home-feature-title">From your notes.<br />To your next breakthrough.</h2>
+            <h2 id="home-feature-title">Turn your notes<br />into a study session</h2>
             <p>{featured.summary}</p>
             <Link className="home-feature-link text-link" to={`/projects/${featured.slug}`}>Explore {featured.title}<ArrowUpRight size={15} /></Link>
           </div>
@@ -85,7 +84,7 @@ export default function Home() {
 
         <section className="home-index container" data-reveal aria-labelledby="home-index-title">
           <div className="home-index-heading">
-            <div><span className="home-section-label">The working collection</span><h2 id="home-index-title">Four projects.<br />One habit of building.</h2></div>
+            <div><span className="home-section-label">The working collection</span><h2 id="home-index-title">Four projects<br />One habit of building</h2></div>
             <Link className="home-index-all text-link" to="/projects">All projects<ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
           <ol className="home-index-list">{portfolio.projects.map((project) => (
@@ -100,7 +99,7 @@ export default function Home() {
 
         <section className="home-notes" data-reveal aria-labelledby="home-notes-title">
           <div className="container home-notes-inner">
-            <div className="home-notes-heading"><span className="home-section-label">Field notes</span><h2 id="home-notes-title">What the work keeps teaching me.</h2></div>
+            <div className="home-notes-heading"><span className="home-section-label">Field notes</span><h2 id="home-notes-title">What the work keeps teaching me</h2></div>
             <ol className="home-notes-list">{fieldNotes.map((note, index) => (
               <li className="home-note" key={note.title}><span className="home-note-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><div><h3>{note.title}</h3><p>{note.body}</p></div></li>
             ))}</ol>
@@ -108,7 +107,7 @@ export default function Home() {
         </section>
 
         <section className="home-timeline container" data-reveal aria-labelledby="home-timeline-title">
-          <div className="home-timeline-heading"><span className="home-section-label">Where I’m learning</span><h2 id="home-timeline-title">The path so far.</h2><Link className="home-timeline-more text-link" to="/about">More about me<ArrowUpRight size={15} aria-hidden="true" /></Link></div>
+          <div className="home-timeline-heading"><span className="home-section-label">Where I’m learning</span><h2 id="home-timeline-title">The path so far</h2><Link className="home-timeline-more text-link" to="/about">More about me<ArrowUpRight size={15} aria-hidden="true" /></Link></div>
           <ol className="home-timeline-list">{portfolio.milestones.map((item) => (
             <li className="home-timeline-item" key={item.label}>
               <span className="home-timeline-when"><span className="home-timeline-period">{item.period}</span><span className="home-timeline-label">{item.label}</span></span>
